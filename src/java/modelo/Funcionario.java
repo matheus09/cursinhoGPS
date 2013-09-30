@@ -12,19 +12,22 @@ import javax.persistence.Id;
 
 /**
  *
- * @author ciro
+ * @author daniel
  */
 @Entity
-public class Pessoa implements Serializable {
+public class Funcionario extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String funcao;
+    private Double salario;
+    
+    @Override
     public Long getId() {
         return id;
     }
-
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -39,10 +42,10 @@ public class Pessoa implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pessoa)) {
+        if (!(object instanceof Funcionario)) {
             return false;
         }
-        Pessoa other = (Pessoa) object;
+        Funcionario other = (Funcionario) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -51,7 +54,35 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Pessoa[ id=" + id + " ]";
+        return "modelo.Funcionario[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the funcao
+     */
+    public String getFuncao() {
+        return funcao;
+    }
+
+    /**
+     * @param funcao the funcao to set
+     */
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
+    /**
+     * @return the salario
+     */
+    public Double getSalario() {
+        return salario;
+    }
+
+    /**
+     * @param salario the salario to set
+     */
+    public void setSalario(Double salario) {
+        this.salario = salario;
     }
     
 }
