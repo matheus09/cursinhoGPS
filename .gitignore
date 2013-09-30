@@ -1,8 +1,0 @@
-*.class
-persistence.xml
-
-# Package Files #
-*.jar
-*.war
-*.ear
-/nbproject/private/
