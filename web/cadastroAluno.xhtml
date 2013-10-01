@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cursinho</title>
+    </h:head>
+    <body>
+        <h:form>
+            <h2>Preencha os campos e abaixo</h2>
+
+            <h:outputText value="Digite seu nome:"/>
+            <p:inputText value="#{alunoMB.aluno.nome}" required="true"/>
+            <br/>
+            <br/>
+
+            <h:outputText value="Digite seu email:"/>
+            <p:inputText value="#{alunoMB.aluno.email}" required="true"/>
+            <br/>
+            <br/>
+
+            <h:outputText value="Digite seu endereço:"/>
+            <p:inputText value="#{alunoMB.aluno.endereco}" required="true"/>
+            <br/>
+            <br/>
+
+            <h:outputText value="Digite seu telefone:"/>
+            <p:inputText value="#{alunoMB.aluno.telefone}" required="true"/>
+            <br/>
+            <br/>
+
+            <h:outputText value="Informe sua data de nascimento:"/>
+            <p:calendar value="#{alunoMB.aluno.dataNascimento}" required="true"/>
+            <br/>
+            <br/>
+            
+            <p:commandButton value="Cadastrar" action="#{alunoMB.cadastrar()}" ajax="false"/>
+        </h:form>
+        
+        <p:dataTable value="#{alunoMB.getTodos()}" emptyMessage="Nenhum aluno cadastrado"
+                     var="aluno">
+            <p:column>
+                <h:outputText value="#{aluno.nome}"/>
+            </p:column>
+        </p:dataTable>
+    </body>
+</html>

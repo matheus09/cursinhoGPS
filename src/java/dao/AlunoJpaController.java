@@ -13,15 +13,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import modelo.Pessoa;
+import modelo.Aluno;
 
 /**
  *
  * @author ciro
  */
-public class PessoaJpaController implements Serializable {
+public class AlunoJpaController implements Serializable {
 
-    public PessoaJpaController(EntityManagerFactory emf) {
+    public AlunoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -30,12 +30,12 @@ public class PessoaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Pessoa pessoa) {
+    public void create(Aluno aluno) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(pessoa);
+            em.persist(aluno);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -44,19 +44,19 @@ public class PessoaJpaController implements Serializable {
         }
     }
 
-    public void edit(Pessoa pessoa) throws NonexistentEntityException, Exception {
+    public void edit(Aluno aluno) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            pessoa = em.merge(pessoa);
+            aluno = em.merge(aluno);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = pessoa.getId();
-                if (findPessoa(id) == null) {
-                    throw new NonexistentEntityException("The pessoa with id " + id + " no longer exists.");
+                Long id = aluno.getId();
+                if (findAluno(id) == null) {
+                    throw new NonexistentEntityException("The aluno with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -72,14 +72,14 @@ public class PessoaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Pessoa pessoa;
+            Aluno aluno;
             try {
-                pessoa = em.getReference(Pessoa.class, id);
-                pessoa.getId();
+                aluno = em.getReference(Aluno.class, id);
+                aluno.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The pessoa with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The aluno with id " + id + " no longer exists.", enfe);
             }
-            em.remove(pessoa);
+            em.remove(aluno);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -88,19 +88,19 @@ public class PessoaJpaController implements Serializable {
         }
     }
 
-    public List<Pessoa> findPessoaEntities() {
-        return findPessoaEntities(true, -1, -1);
+    public List<Aluno> findAlunoEntities() {
+        return findAlunoEntities(true, -1, -1);
     }
 
-    public List<Pessoa> findPessoaEntities(int maxResults, int firstResult) {
-        return findPessoaEntities(false, maxResults, firstResult);
+    public List<Aluno> findAlunoEntities(int maxResults, int firstResult) {
+        return findAlunoEntities(false, maxResults, firstResult);
     }
 
-    private List<Pessoa> findPessoaEntities(boolean all, int maxResults, int firstResult) {
+    private List<Aluno> findAlunoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Pessoa.class));
+            cq.select(cq.from(Aluno.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -112,20 +112,20 @@ public class PessoaJpaController implements Serializable {
         }
     }
 
-    public Pessoa findPessoa(Long id) {
+    public Aluno findAluno(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Pessoa.class, id);
+            return em.find(Aluno.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getPessoaCount() {
+    public int getAlunoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Pessoa> rt = cq.from(Pessoa.class);
+            Root<Aluno> rt = cq.from(Aluno.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
