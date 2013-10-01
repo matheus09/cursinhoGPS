@@ -92,26 +92,26 @@
                         <h:inputHidden value="#{funcionarioMB.funcionario.id}"/>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Nome da Funcionario:*"/>
-                            <p:inputText id="nomeDoFunc" maxlength="30" value="#{funcionarioMB.funcionario.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoFunc"/>
+                            <p:inputText id="nomeDoFunc" maxlength="30" value="#{funcionarioMB.funcionario.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
 
                             <h:outputLabel value="Telefone:*"/>
-                            <p:inputText id="telefone" maxlength="200" value="#{funcionarioMB.funcionario.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="telefone"/>
+                            <p:inputText id="telefone" maxlength="200" value="#{funcionarioMB.funcionario.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Data de Nascimento:*"/>
                             <p:calendar id="dataNasc" value="#{funcionarioMB.funcionario.dataNascimento}" required="true" requiredMessage="Campo Obrigatório">
                             </p:calendar><p:message for="dataNasc"/>
 
                             <h:outputLabel value="Email:*"/>
-                            <p:inputText id="email" maxlength="200" value="#{funcionarioMB.funcionario.email}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="email"/>
+                            <p:inputText id="email" maxlength="200" value="#{funcionarioMB.funcionario.email}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Endereço:*"/>
-                            <p:inputText id="endereco" maxlength="200" value="#{funcionarioMB.funcionario.endereco}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="endereco"/>
+                            <p:inputText id="endereco" maxlength="200" value="#{funcionarioMB.funcionario.endereco}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Função:*"/>
-                            <p:inputText id="funcao" maxlength="200" value="#{funcionarioMB.funcionario.funcao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="funcao"/>
+                            <p:inputText id="funcao" maxlength="200" value="#{funcionarioMB.funcionario.funcao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Salario:*"/>
-                            <p:inputText id="salario" maxlength="200" value="#{funcionarioMB.funcionario.salario}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="salario"/>
+                            <p:inputText id="salario" maxlength="200" value="#{funcionarioMB.funcionario.salario}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                         </h:panelGrid>
                         <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" update=":formPesquisa, :tabela, formulario"/>
