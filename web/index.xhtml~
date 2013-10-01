@@ -1,17 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-<<<<<<< HEAD
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
-
-=======
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
@@ -103,26 +92,26 @@
                         <h:inputHidden value="#{funcionarioMB.funcionario.id}"/>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Nome da Funcionario:*"/>
-                            <p:inputText id="nomeDoFunc" maxlength="30" value="#{funcionarioMB.funcionario.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoFunc"/>
+                            <p:inputText id="nomeDoFunc" maxlength="30" value="#{funcionarioMB.funcionario.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
 
                             <h:outputLabel value="Telefone:*"/>
-                            <p:inputText id="telefone" maxlength="200" value="#{funcionarioMB.funcionario.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="telefone"/>
+                            <p:inputText id="telefone" maxlength="200" value="#{funcionarioMB.funcionario.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Data de Nascimento:*"/>
                             <p:calendar id="dataNasc" value="#{funcionarioMB.funcionario.dataNascimento}" required="true" requiredMessage="Campo Obrigatório">
                             </p:calendar><p:message for="dataNasc"/>
 
                             <h:outputLabel value="Email:*"/>
-                            <p:inputText id="email" maxlength="200" value="#{funcionarioMB.funcionario.email}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="email"/>
+                            <p:inputText id="email" maxlength="200" value="#{funcionarioMB.funcionario.email}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Endereço:*"/>
-                            <p:inputText id="endereco" maxlength="200" value="#{funcionarioMB.funcionario.endereco}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="endereco"/>
+                            <p:inputText id="endereco" maxlength="200" value="#{funcionarioMB.funcionario.endereco}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Função:*"/>
-                            <p:inputText id="funcao" maxlength="200" value="#{funcionarioMB.funcionario.funcao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="funcao"/>
+                            <p:inputText id="funcao" maxlength="200" value="#{funcionarioMB.funcionario.funcao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                             <h:outputLabel value="Salario:*"/>
-                            <p:inputText id="salario" maxlength="200" value="#{funcionarioMB.funcionario.salario}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="salario"/>
+                            <p:inputText id="salario" maxlength="200" value="#{funcionarioMB.funcionario.salario}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
 
                         </h:panelGrid>
                         <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" update=":formPesquisa, :tabela, formulario"/>
@@ -154,4 +143,3 @@
 
     </h:body>
 </html>
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
