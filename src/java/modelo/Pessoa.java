@@ -6,6 +6,7 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,12 +19,26 @@ import javax.persistence.Temporal;
  */
 @MappedSuperclass
 public class Pessoa implements Serializable {
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String telefone;
+    @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String endereco;
+    
+    /**
+     * Testa se a Pessoa é maior de idade.
+     * @return indica true se for maior de idade ou false, caso contrário.
+     */
+    public boolean maioridade(){
+        return false;
+    }
+    
     
     /**
      * @return the nome

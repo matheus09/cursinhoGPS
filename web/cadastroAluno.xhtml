@@ -8,11 +8,11 @@
         <title>Cursinho</title>
     </h:head>
     <body>
-        <p:dataTable value="#{alunoMB.getTodos()}" emptyMessage="Nenhum aluno cadastrado"
+        <p:dataTable value="#{alunoMB.alunos}" emptyMessage="Nenhum aluno cadastrado"
                      paginatorTemplate="{CurrentPageReport}   {FirstPageLink} {PreviousPageLink}
                      {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                      paginator="true" rows="5" rowsPerPageTemplate="5,10,15,20,25"
-                     var="aluno">
+                     var="aluno" id="tabAlunos">
             <f:facet name="header">  
                  <h:outputText value="Alunos" /> 
             </f:facet>
@@ -123,23 +123,23 @@
         
         <!--h:outputText value="[#{alunoMB.aluno.id}]"/-->
         <p:panel header="Manutenção de Alunos">
-            <h:form>
+            <h:form id="formCadAlunos">
                 <h:inputHidden value="#{alunoMB.aluno.id}"/>
-                <p:panelGrid columns="3">
+                <h:panelGrid columns="3">
                     <h:outputText value="Nome:"/>
-                    <p:inputText value="#{alunoMB.aluno.nome}" required="true"
+                    <p:inputText id="campoNome" value="#{alunoMB.aluno.nome}" required="true"
                                  requiredMessage="Campo obrigatório"/>
-                    <p:message for="campoTelefone"/>
+                    <p:message for="campoNome"/>
 
                     <h:outputText value="E-mail:"/>
-                    <p:inputText value="#{alunoMB.aluno.email}" required="true"
-                                 requiredMessage="Campo obrigatório"/>
-                    <p:message for="campoTelefone"/>
+                    <p:inputText id="campoEmail" value="#{alunoMB.aluno.email}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEmail"/>
 
                     <h:outputText value="Digite seu endereço:"/>
-                    <p:inputText value="#{alunoMB.aluno.endereco}" required="true"
-                                 requiredMessage="Campo obrigatório"/>
-                    <p:message for="campoTelefone"/>
+                    <p:inputText id="campoEndereco" value="#{alunoMB.aluno.endereco}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEndereco"/>
 
                     <h:outputText value="Telefone:"/>
                     <p:inputMask id="campoTelefone" mask="(99) 9999-9999"
@@ -149,10 +149,30 @@
                     <p:message for="campoTelefone"/>
 
                     <h:outputText value="Data de nascimento:"/>
-                    <p:calendar value="#{alunoMB.aluno.dataNascimento}" required="true"
-                                requiredMessage="Campo obrigatório"/>
-                    <p:message for="campoTelefone"/>
-                </p:panelGrid>
+                    <p:calendar id="campoData" value="#{alunoMB.aluno.dataNascimento}"
+                                required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoData"/>
+                </h:panelGrid>
+                
+                <br/>
+                <h:outputText value="Os campos abaixo são obrigatórios apenas para menores de 18 anos"/>
+                <br/>
+                
+                <h:panelGrid columns="3">
+                    <h:outputText value="Responsável:"/>
+                    <p:inputText id="campoResp" value="#{alunoMB.aluno.responsavel}"/>
+                    <p:message for="campoResp"/>
+
+                    <h:outputText value="Parentesco:"/>
+                    <p:inputText id="campoRespParentesco" value="#{alunoMB.aluno.respParentesco}"/>
+                    <p:message for="campoRespParentesco"/>
+                    
+                    <h:outputText value="Telefone:"/>
+                    <p:inputMask id="campoRespTelefone" mask="(99) 9999-9999"
+                                 value="#{alunoMB.aluno.respTelefone}"
+                                 validatorMessage="Digite um telefone no formato (XX) XXXX-XXXX"/>
+                    <p:message for="campoRespTelefone"/>
+                </h:panelGrid>
 
                 <p:commandButton value="Cadastrar" action="#{alunoMB.cadastrar()}" ajax="false"/>
                 <p:commandButton value="Alterar" action="#{alunoMB.alterar()}" ajax="false"/>
@@ -161,6 +181,8 @@
             <h:form>
                 <p:commandButton value="Limpar" action="#{alunoMB.limpar()}" ajax="false"/>
             </h:form>
+            
+            <p:messages for="formCadAlunos"/>
         </p:panel>
         
     </body>
