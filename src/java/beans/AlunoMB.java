@@ -5,12 +5,13 @@
 package beans;
 
 import dao.AlunoJpaController;
-import dao.PessoaJpaController;
+import dao.exceptions.NonexistentEntityException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import modelo.Aluno;
-import modelo.Pessoa;
 import util.EMF;
 
 /**
@@ -22,10 +23,37 @@ import util.EMF;
 public class AlunoMB {
     private Aluno aluno = new Aluno();
     
-    private AlunoJpaController daoAluno = new AlunoJpaController(EMF.getEntityManagerFactory());
+    private AlunoJpaController dao = new AlunoJpaController(EMF.getEntityManagerFactory());
+    
+    public void carregar(Aluno aluno){
+        setAluno(aluno);
+    }
+    
+    public void limpar(){
+        setAluno(new Aluno());
+    }
+    
+    public void excluir(Long id){
+        try {
+            dao.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(AlunoMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public void cadastrar(){
-        daoAluno.create(aluno);
+        dao.create(aluno);
+        aluno = new Aluno();
+    }
+    
+    public void alterar(){
+        try {
+            dao.edit(aluno);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(AlunoMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(AlunoMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -46,6 +74,6 @@ public class AlunoMB {
     }
     
     public List<Aluno> getTodos(){
-        return daoAluno.findAlunoEntities();
+        return dao.findAlunoEntities();
     }
 }
