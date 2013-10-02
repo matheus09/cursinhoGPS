@@ -25,6 +25,8 @@ import util.FacesUtil;
 public class AlunoMB {
     private Aluno aluno = new Aluno();
     private AlunoJpaController dao = new AlunoJpaController(EMF.getEntityManagerFactory());
+    private List<Aluno> alunos;
+    private String pesquisa;
     
     /**
      * Carrega o Aluno clicado para este bean. Quando o usuário clica num
@@ -35,10 +37,9 @@ public class AlunoMB {
         setAluno(aluno);
     }
     
-    
     /**
      * Limpa o formulário de cadastro de alunos.
-     * Ele apenas atribui um novo Aluno para este bean.
+     * Apenas atribui um novo Aluno para este bean.
      */
     public void limpar(){
         setAluno(new Aluno());
@@ -129,7 +130,58 @@ public class AlunoMB {
         this.aluno = aluno;
     }
     
+    /**
+     * Pega os alunos filtrando pelo atributo pesquisa. Se o atributo não for
+     * preenchido, retorna todos os alunos.
+     * @return alunos filtrados pela pesquisa
+     */
     public List<Aluno> getAlunos(){
-        return dao.findAlunoEntities();
+        if(pesquisa == null){
+            alunos = dao.findAlunoEntities();
+        } else if(pesquisa.isEmpty()){
+            alunos = dao.findAlunoEntities();
+        } else {
+            pesquisarPorNome();
+        }
+        return alunos;
+    }
+    
+    /**
+     * Pesquisa os alunos por nome de acordo com o atributo pesquisa. Não
+     * retorna nada. Para acessar os resultados, utilize o atributo alunos deste
+     * bean.
+     */
+    public void pesquisarPorNome(){
+        alunos = dao.pesquisarPorNome(pesquisa);
+    }
+    
+    /**
+     * Limpa a pesquisa e pega todos os alunos. Não retorna nada. Para acessar
+     * os resultados, utilize o atributo alunos deste bean.
+     */
+    public void getTodos(){
+        pesquisa = "";
+        getAlunos();
+    }
+    
+    /**
+     * @return the pesquisa
+     */
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    /**
+     * @param pesquisa the pesquisa to set
+     */
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
+    }
+
+    /**
+     * @param alunos the alunos to set
+     */
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 }

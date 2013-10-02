@@ -185,5 +185,27 @@
             <p:messages for="formCadAlunos"/>
         </p:panel>
         
+        <!--Formularios de pesquisa-->
+
+        <p:panel header="Pesquisar Alunos Por Nome">
+            <h:form id="formPesqAlunos">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Nome do Aluno:"/>
+                    <p:inputText id="campoPesqNome" value="#{alunoMB.pesquisa}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="formPesqAlunos"/>
+                </h:panelGrid>
+                <p:commandButton value="Pesquisar" ajax="false"
+                                 action="#{alunoMB.pesquisarPorNome()}"/>
+            </h:form>
+        </p:panel>
+        <hr></hr>
+
+        <p:panel header="Pesquisar Todos os Alunos">
+            <h:form id="formPesquisaTodos">
+                <p:commandButton value="Pesquisar todos" ajax="false"
+                                 action="#{alunoMB.getTodos()}"/>
+            </h:form>
+        </p:panel>
     </body>
 </html>

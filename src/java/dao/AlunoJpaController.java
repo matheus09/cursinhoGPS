@@ -11,9 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import modelo.Aluno;
+import modelo.Pessoa_;
 
 /**
  *
@@ -132,6 +134,19 @@ public class AlunoJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public List<Aluno> pesquisarPorNome(String nome) {
+        EntityManager em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        
+        Root<Aluno> rt = cq.from(Aluno.class);
+        cq.where(cb.like(rt.get(Pessoa_.nome), "*" + nome + "*"));
+        
+        Query q = em.createQuery(cq);
+        
+        return q.getResultList();
     }
     
 }
