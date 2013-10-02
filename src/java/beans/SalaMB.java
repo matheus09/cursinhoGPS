@@ -95,9 +95,21 @@ public class SalaMB {
         pesquisar();
     }
     
-    public void excluirSala() {
+    /*public void excluirSala() {
         try {
             daoSala.destroy(sala.getCodigoSala());
+            sala = new Sala();
+            setMensagem("Cadastro excluído com sucesso");
+        } catch (NonexistentEntityException ex) {
+            setMensagem("Cadastro não pode ser excluído");
+            Logger.getLogger(SalaMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        pesquisar();
+    }*/
+    
+    public void excluirSala(Long id) {
+        try {
+            daoSala.destroy(id);
             sala = new Sala();
             setMensagem("Cadastro excluído com sucesso");
         } catch (NonexistentEntityException ex) {
@@ -109,6 +121,10 @@ public class SalaMB {
     
     public void pesquisar(){
         salas = daoSala.findSalaEntities();
+    }
+    
+    public void cancelar(){
+        sala = new Sala();
     }
     
     public void pesquisarPorNomeDeSala(){

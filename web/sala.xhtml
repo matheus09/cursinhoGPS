@@ -49,6 +49,14 @@
                                 <f:setPropertyActionListener value="#{s}" target="#{salaMB.sala}"/> 
                             </p:commandLink>
                         </p:column>
+                        <p:column >  
+                            <f:facet name="header">
+                                <h:outputText value="Opção de exclusão" />   
+                            </f:facet>   
+                            <h:commandLink action="#{salaMB.excluirSala(s.codigoSala)}">
+                                <h:outputText value="Excluir"/> 
+                            </h:commandLink>
+                        </p:column>
                     </p:dataTable>
                 </h:form>
                 <hr></hr>
@@ -70,7 +78,7 @@
                         </h:panelGrid>
                         <p:commandButton value="Cadastrar" action="#{salaMB.inserirSala()}" update=":formPesquisa, :tabela, formulario"/>
                         <p:commandButton value="Alterar" action="#{salaMB.alterarSala()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton value="Excluir" action="#{salaMB.excluirSala()}" update=":formPesquisa, :tabela, formulario"/><br/><br/>
+                        <p:commandButton value="Cancelar" action="#{salaMB.cancelar()}" update=":formPesquisa, formulario"/><br/><br/>
                         <b><h:outputText value="#{salaMB.mensagem}" style="font: bolder"/></b>
                     </p:panel>
                 </h:form>
