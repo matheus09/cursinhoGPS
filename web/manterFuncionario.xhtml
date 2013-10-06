@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Manutenção de Salas</title>
+    </h:head>
+    <h:body>
+                <h:form></h:form>
+                
+                <h:form id="tabela">
+                    <p:dataTable id="dataTable" var="f" value="#{funcionarioMB.funcionarios}" paginator="true" rows="5"  
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15,20,25">
+                        <f:facet name="header">  
+                            <h:outputText value="Todos os Funcionários" /> 
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id do Funcionário" />
+                            </f:facet>
+                            <p:commandLink value="#{f.id}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nome" />
+                            </f:facet>
+                            <p:commandLink value="#{f.nome}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Telefone" />
+                            </f:facet>
+                            <p:commandLink value="#{f.telefone}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data de Nascimento" />
+                            </f:facet>
+                            <p:commandLink value="#{f.dataNascimento}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Email" />
+                            </f:facet>
+                            <p:commandLink value="#{f.email}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Endereço" />
+                            </f:facet>
+                            <p:commandLink value="#{f.endereco}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Função" />
+                            </f:facet>
+                            <p:commandLink value="#{f.funcao}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Salario" />
+                            </f:facet>
+                            <p:commandLink value="#{f.salario}" update=":formulario">
+                                <f:setPropertyActionListener value="#{f}" target="#{funcionarioMB.func}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        
+                    </p:dataTable>
+                </h:form>
+                <hr></hr>
+
+                <!--Formulario de crud-->
+
+                <h:form id="formulario">
+                    <p:panel id="formPanel" header="Manutenção de Funcionarios">
+                        <h:inputHidden value="#{funcionarioMB.func.id}"/>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Nome do Funcionário:*"/>
+                            <p:inputText id="nomeDoFunc" maxlength="30" value="#{funcionarioMB.func.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoFunc"/>
+                            
+                            <h:outputLabel value="Telefone do Funcionário:*"/>
+                            <p:inputText id="telefoneDoFunc" maxlength="30" value="#{funcionarioMB.func.telefone}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="telefoneDoFunc"/>
+                            
+                            <h:outputLabel value="Data de Nascimento do Funcionário:*"/>
+                            <p:calendar id="dataNascDoFunc" maxlength="30" value="#{funcionarioMB.func.dataNascimento}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="dataNascDoFunc"/>
+                            
+                            <h:outputLabel value="Email do Funcionário:*"/>
+                            <p:inputText id="emailDoFunc" maxlength="30" value="#{funcionarioMB.func.email}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="emailDoFunc"/>
+                            
+                            <h:outputLabel value="Endereço do Funcionário:*"/>
+                            <p:inputTextarea id="enderecoDoFunc" maxlength="80" value="#{funcionarioMB.func.endereco}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="enderecoDoFunc"/>
+                            
+                            <h:outputLabel value="Função do Funcionário:*"/>
+                            <p:inputText id="funcaoDoFunc" maxlength="80" value="#{funcionarioMB.func.funcao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="funcaoDoFunc"/>
+                            
+                            <h:outputLabel value="Salario do Funcionário:*"/>
+                            <p:inputText id="salarioDoFunc" maxlength="20" value="#{funcionarioMB.func.salario}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="salarioDoFunc"/>
+                                             
+                        </h:panelGrid>
+                        <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" update=":tabela, :formulario"/>
+                        <!--p:commandButton value="Alterar" action="{salaMB.alterarSala()}" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton value="Cancelar" action="{salaMB.cancelar()}" update=":formPesquisa, formulario"/><br/><br/>
+                        <b><h:outputText value="{salaMB.mensagem}" style="font: bolder"/></b-->
+                    </p:panel>
+                </h:form>
+                <hr></hr>
+                
+                 <!--Formulario de pesquisa-->
+
+                <!--h:form id="formPesquisa">
+                    <p:panel id="formPanelPesquisa" header="Pesquisar Salas Por Nome">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Nome da Sala:*"/>
+                            <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="#{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Pesquisar" action="{salaMB.pesquisarPorNomeDeSala()}" update="formPesquisa, :tabela, :formulario"/>
+                    </p:panel>
+                </h:form>
+                <hr></hr>
+                
+                <h:form id="formPesquisaTodos">
+                    <p:panel id="formPanelPesquisa" header="Pesquisar Todas Salas">
+                        <p:commandButton value="Pesquisar Todos" action="{salaMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
+                    </p:panel>
+                </h:form-->
+
+    </h:body>
+</html>

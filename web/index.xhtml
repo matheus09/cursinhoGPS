@@ -8,9 +8,12 @@
     </h:head>
     <h:body>
         Hello from Facelets
-        <br />
+        
         <!--h:link outcome="welcomePrimefaces" value="Primefaces welcome page" /-->
         <h:form>
+        <br />
+        <h:commandLink value="Manter Funcionários" action="/manterFuncionario.xhtml" />
+        <br />
         <p:outputLabel value="Nome:"/>
         <p:inputText value="#{funcionarioMB.func.nome}"/>
         <br/>
@@ -32,6 +35,7 @@
         <p:outputLabel value="Salario:"/>
         <p:inputText value="#{funcionarioMB.func.salario}"/>
         
+        <br/>
         <p:commandButton value="Inserir" action="#{funcionarioMB.inserir()}"
                              ajax="false"/>
         </h:form>
