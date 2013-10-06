@@ -12,13 +12,9 @@ import javax.persistence.Persistence;
  * @author daniel
  */
 public class EMF {
-    private static EntityManagerFactory factory;
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CursinhoPU");
     
-    public static EntityManagerFactory getFactory()
-    {
-        if(factory == null){
-            factory = Persistence.createEntityManagerFactory("cursinhoGPSPU");
-        }
-        return factory;
+    public static EntityManagerFactory getFactory(){
+        return emf;
     }
 }

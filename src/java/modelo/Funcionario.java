@@ -16,18 +16,25 @@ import javax.persistence.Id;
  */
 @Entity
 public class Funcionario extends Pessoa implements Serializable {
+
+    /**
+     * @return the serialVersionUID
+     */
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+    private String funcao;
+    private Double salario;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String funcao;
-    private Double salario;
-    
-    @Override
+
     public Long getId() {
         return id;
     }
-    @Override
+
     public void setId(Long id) {
         this.id = id;
     }

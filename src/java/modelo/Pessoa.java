@@ -6,55 +6,121 @@ package modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 
 /**
  *
-<<<<<<< HEAD
- * @author Hyago Brendoll
-=======
  * @author ciro
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
  */
-@Entity
+@MappedSuperclass
 public class Pessoa implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String nome;
     private String telefone;
-<<<<<<< HEAD
-=======
-    
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
     private String email;
     private String endereco;
-<<<<<<< HEAD
+    private int idade;
+    
+    /**
+     * Diz se a pessoa tem mais de 18 anos.
+     * @return valor booleano indicando true, se for maior de idade e false,
+     * caso contrário.
+     */
+    public boolean maioridade(){
+        if (getIdade() < 18){
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
 
-=======
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the telefone
+     */
+    public String getTelefone() {
+        return telefone;
+    }
+
+    /**
+     * @param telefone the telefone to set
+     */
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    /**
+     * @return the dataNascimento
+     */
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    /**
+     * @param dataNascimento the dataNascimento to set
+     */
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * @return the endereco
+     */
+    public String getEndereco() {
+        return endereco;
+    }
+
+    /**
+     * @param endereco the endereco to set
+     */
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
     
-    
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-<<<<<<< HEAD
-    }   
-
-=======
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -75,115 +141,23 @@ public class Pessoa implements Serializable {
         return true;
     }
 
-    /*public boolean maioridade(){
-        Date a = new Date();
-       
-    }*/
-    
     @Override
     public String toString() {
         return "modelo.Pessoa[ id=" + id + " ]";
     }
 
     /**
-     * @return the nome
+     * @return the idade
      */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public String getNome() {
-        return nome;
+    public int getIdade() {
+        return idade;
     }
 
-<<<<<<< HEAD
-=======
     /**
-     * @param nome the nome to set
+     * @param idade the idade to set
      */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @return the telefone
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public String getTelefone() {
-        return telefone;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @param telefone the telefone to set
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @return the dataNascimento
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @param dataNascimento the dataNascimento to set
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @return the email
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public String getEmail() {
-        return email;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @param email the email to set
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @return the endereco
-     */
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
-    public String getEndereco() {
-        return endereco;
-    }
-
-<<<<<<< HEAD
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-=======
-    /**
-     * @param endereco the endereco to set
-     */
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
     
->>>>>>> 640561fc873cba26a2af79e154eeb5da414f20f4
 }
