@@ -58,9 +58,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Excluir" />   
                             </f:facet>   
-                            <h:commandLink action="#{cursoMB.excluirTabela(c.id)}">
-                                <h:outputText value="Excluir"/> 
-                            </h:commandLink>
+                             <h:commandButton action="#{cursoMB.excluirTabela(c.id)}" value="Excluir">
+                               
+                            </h:commandButton>
                         </p:column>
                         
                     </p:dataTable>
