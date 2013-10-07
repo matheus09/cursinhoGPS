@@ -58,9 +58,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Excluir" />   
                             </f:facet>   
-                             <h:commandButton action="#{cursoMB.excluirTabela(c.id)}" value="Excluir">
-                               
-                            </h:commandButton>
+                             <p:commandButton  ajax="false" action="#{cursoMB.excluirTabela(c.id)}" image="ui-icon ui-icon-trash" update=":formPesquisa, :tabela"/>
                         </p:column>
                         
                     </p:dataTable>
@@ -74,21 +72,21 @@
                         <h:inputHidden value="#{cursoMB.curso.id}"/>
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Nome:*"/>
-                            <p:inputText id="nome" maxlength="30" value="#{cursoMB.curso.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nome"/>
+                            <p:inputText size="40" id="nome" maxlength="30" value="#{cursoMB.curso.nome}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nome"/>
                             <h:outputLabel value="Descrição:*"/>
-                            <p:inputText id="descricao" maxlength="200" value="#{cursoMB.curso.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
+                            <p:inputText size="40" id="descricao" maxlength="200" value="#{cursoMB.curso.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
                             <h:outputLabel value="Duração:*"/>
-                            <p:inputText id="duracao" value="#{cursoMB.curso.duracao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="duracao"/>
+                            <p:inputText size="40" id="duracao" value="#{cursoMB.curso.duracao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="duracao"/>
                             <h:outputLabel value="Quantidade de Horas:*"/>
-                            <p:inputText id="qtdHoras" value="#{cursoMB.curso.qtdHoras}" required="true" requiredMessage="Campo Obrigatório">
+                            <p:inputText size="8" id="qtdHoras" value="#{cursoMB.curso.qtdHoras}" required="true" requiredMessage="Campo Obrigatório">
                            
                             </p:inputText><p:message for="qtdHoras"/>
                         
                         </h:panelGrid>
-                        <p:commandButton value="Cadastrar" action="#{cursoMB.inserir()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton value="Alterar" action="#{cursoMB.alterar()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton value="Cancelar" action="#{cursoMB.cancelar()}" update=":formPesquisa, :tabela, formulario"/><br/><br/>
-                        <b><h:outputText value="#{cursoMB.mensagem}" /></b>
+                        <p:commandButton  ajax="false" value="Cadastrar" action="#{cursoMB.inserir()}" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton  ajax="false" value="Alterar" action="#{cursoMB.alterar()}" update=":formPesquisa, :tabela, formulario" />
+                        <p:commandButton  ajax="false" value="Cancelar" action="#{cursoMB.cancelar()}" update=":formPesquisa, :tabela, formulario"/><br/><br/>
+                        <b><h:outputText value="#{cursoMB.mensagem}" style="color: red"/></b>
                     </p:panel>
                 </h:form>
                 <hr></hr>
@@ -98,17 +96,17 @@
                 <h:form id="formPesquisa">
                     <p:panel id="formPanelPesquisa" header="Pesquisar Curso">
                         <h:panelGrid columns="3">
-                            <h:outputLabel value="Nome do Curso:*"/>
-                            <p:inputText id="nomeDoCurso" style="text-transform: lowercase" maxlength="30" value ="#{cursoMB.pesqCurso}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoCurso"/>
+                            <h:outputLabel value="Nome/Duração:*"/>
+                            <p:inputText size="40" id="nomeDoCurso" style="text-transform: lowercase" maxlength="30" value ="#{cursoMB.pesqCurso}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoCurso"/>
                         </h:panelGrid>
-                        <p:commandButton value="Pesquisar" action="#{cursoMB.pesquisarPorNomeDeCurso()}" update="formPesquisa, :tabela, :formulario"/>
+                        <p:commandButton ajax="false" value="Pesquisar" action="#{cursoMB.pesquisarCursos()}" update="formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
                 <hr></hr>
                 
                 <h:form id="formPesquisaTodos">
-                    <p:panel id="formPanelPesquisa" header="Pesquisar Todos Curso">
-                        <p:commandButton value="Pesquisar Todos" action="#{cursoMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
+                    <p:panel id="formPanelPesquisa" header="Pesquisar todos os cursos">
+                        <p:commandButton ajax="false" value="Pesquisar Todos" action="#{cursoMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
                 

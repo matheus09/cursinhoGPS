@@ -54,6 +54,8 @@ public class CursoMB {
      */
     public void setListaCurso(List<Curso> ListaCurso) {
         this.listaCurso = ListaCurso;
+        pesquisar();
+        
     }
 
     /**
@@ -123,7 +125,7 @@ public class CursoMB {
     public void excluirTabela(Long id) {
         try {
             dao.destroy(id);
-            setMensagem(this.getCurso().getNome() + " excluído com sucesso!");
+            setMensagem("Excluído com sucesso!");
             curso = new Curso();
         } catch (NonexistentEntityException ex) {
             this.setMensagem("Cadastro não pode ser excluído");
@@ -141,10 +143,10 @@ public class CursoMB {
         
     }
     
-     public void pesquisarPorNomeDeCurso(){
+     public void pesquisarCursos(){
         listaCurso = new ArrayList<Curso>();
         for(Curso cr : dao.findCursoEntities()){
-            if(cr.getNome().toUpperCase().contains(getPesqCurso().toUpperCase())){
+            if ((cr.getNome().toLowerCase().contains(pesqCurso) || (cr.getDuracao().toLowerCase().contains(pesqCurso)))) {
                 listaCurso.add(cr);
             }
         }
