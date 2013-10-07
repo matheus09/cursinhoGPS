@@ -5,8 +5,11 @@
 package beans;
 
 import dao.FuncionarioJpaController;
+import dao.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
@@ -32,12 +35,20 @@ public class FuncionarioMB {
     }
     
     public void inserir(){
-        getDao().create(getFunc());
-        setFunc(new Funcionario());
+        dao.create(func);
+        func = new Funcionario();
     }
 
+    public void excluir(){
+        try {
+            dao.destroy(func.getId());
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(FuncionarioMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void listarFuncionarios(){
-        setFuncionarios(dao.findFuncionarioEntities());
+        funcionarios = dao.findFuncionarioEntities();
     }
     
     /**

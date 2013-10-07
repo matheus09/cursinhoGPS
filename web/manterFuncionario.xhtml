@@ -8,7 +8,9 @@
         <title>Manutenção de Salas</title>
     </h:head>
     <h:body>
-                <h:form></h:form>
+                <h:form>
+                    <h:commandLink value="Início" action="/index.xhtml"/>
+                </h:form>
                 
                 <h:form id="tabela">
                     <p:dataTable id="dataTable" var="f" value="#{funcionarioMB.funcionarios}" paginator="true" rows="5"  
@@ -135,18 +137,18 @@
                     <p:panel id="formPanelPesquisa" header="Pesquisar Salas Por Nome">
                         <h:panelGrid columns="3">
                             <h:outputLabel value="Nome da Sala:*"/>
-                            <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="#{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
+                            <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
                         </h:panelGrid>
                         <p:commandButton value="Pesquisar" action="{salaMB.pesquisarPorNomeDeSala()}" update="formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
-                <hr></hr>
+                <hr></hr-->
                 
                 <h:form id="formPesquisaTodos">
-                    <p:panel id="formPanelPesquisa" header="Pesquisar Todas Salas">
-                        <p:commandButton value="Pesquisar Todos" action="{salaMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
+                    <p:panel id="formPanelPesquisa" header="Pesquisar Todos os Funcionarios">
+                        <p:commandButton value="Pesquisar Todos" action="#{funcionarioMB.listarFuncionarios()}" update=":tabela, :formulario"/>
                     </p:panel>
-                </h:form-->
+                </h:form>
 
     </h:body>
 </html>
