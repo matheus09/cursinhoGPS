@@ -5,13 +5,13 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -24,19 +24,37 @@ public class Pessoa implements Serializable {
     @Column(nullable = false)
     private String telefone;
     @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dataNascimento;
+    private String dataNascimento;
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
     private String endereco;
     
     /**
-     * Testa se a Pessoa é maior de idade.
-     * @return indica true se for maior de idade ou false, caso contrário.
+     * (Não implementado) Testa se a Pessoa é maior de idade.
+     * @return (está retornando false, por enquanto) indica true se for maior de idade ou false, caso contrário.
      */
     public boolean maioridade(){
-        return false;
+        return true;
+        /*
+        if ((agora.YEAR - nasc.YEAR) > 18) {
+            return true;
+        } else if ((agora.YEAR - nasc.YEAR) < 18) {
+            return false;
+        } else {
+            if (agora.MONTH > nasc.MONTH) {
+                return true;
+            } else if (agora.MONTH < nasc.MONTH) {
+                return false;
+            } else {
+                if (agora.DAY_OF_MONTH > nasc.DAY_OF_MONTH) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        */
     }
     
     
@@ -71,14 +89,16 @@ public class Pessoa implements Serializable {
     /**
      * @return the dataNascimento
      */
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
     /**
-     * @param dataNascimento the dataNascimento to set
+     * @param dataNascimento a data de nascimento da pessoa.
      */
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
+        //SimpleDateFormat df = new SimpleDateFormat("DD/MM/yyyy");
+        //df.format(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 

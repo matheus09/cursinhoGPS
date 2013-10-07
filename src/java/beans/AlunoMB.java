@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.EntityExistsException;
 import javax.persistence.RollbackException;
 import modelo.Aluno;
 import util.EMF;
@@ -66,6 +67,8 @@ public class AlunoMB {
                 FacesUtil.adicionarMensagem("formCadAlunos", "Preencha os dados"
                         + " do seu responsável");
             }
+        } catch (EntityExistsException e) {
+            FacesUtil.adicionarMensagem("formCadAlunos", "Este aluno já está cadastrado");
         } catch (RollbackException e) {
             FacesUtil.adicionarMensagem("formCadAlunos", "Erro: Algo deu errado "
                     + "no cadastro");

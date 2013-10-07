@@ -121,14 +121,13 @@
         
         <!--Formulario de crud-->
         
-        <!--h:outputText value="[#{alunoMB.aluno.id}]"/-->
         <p:panel header="Manutenção de Alunos">
             <h:form id="formCadAlunos">
                 <h:inputHidden value="#{alunoMB.aluno.id}"/>
                 <h:panelGrid columns="3">
                     <h:outputText value="Nome:"/>
-                    <p:inputText id="campoNome" value="#{alunoMB.aluno.nome}" required="true"
-                                 requiredMessage="Campo obrigatório"/>
+                    <p:inputText id="campoNome" value="#{alunoMB.aluno.nome}" 
+                                 required="true" requiredMessage="Campo obrigatório"/>
                     <p:message for="campoNome"/>
 
                     <h:outputText value="E-mail:"/>
@@ -149,8 +148,9 @@
                     <p:message for="campoTelefone"/>
 
                     <h:outputText value="Data de nascimento:"/>
-                    <p:calendar id="campoData" value="#{alunoMB.aluno.dataNascimento}"
-                                required="true" requiredMessage="Campo obrigatório"/>
+                    <p:inputMask id="campoData" value="#{alunoMB.aluno.dataNascimento}"
+                                required="true" requiredMessage="Campo obrigatório"
+                                mask="99/99/9999"/>
                     <p:message for="campoData"/>
                 </h:panelGrid>
                 
