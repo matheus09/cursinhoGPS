@@ -78,9 +78,14 @@ public class AlunoMB {
     public void alterar(){
         try {
             if(aluno.getId() != null){
-                dao.edit(aluno);
-                aluno = new Aluno();
-                FacesUtil.adicionarMensagem("formCadAlunos", "O aluno foi alterado");
+                if(verificarResponsavel()){
+                    dao.edit(aluno);
+                    aluno = new Aluno();
+                    FacesUtil.adicionarMensagem("formCadAlunos", "O aluno foi alterado");
+                } else {
+                    FacesUtil.adicionarMensagem("formCadAlunos", "Preencha os dados"
+                        + " do seu responsável");
+                }
             } else {
                 FacesUtil.adicionarMensagem("formCadAlunos", "Nenhum aluno foi "
                         + "selecionado. Clique em um aluno para alterá-lo.");
@@ -104,16 +109,19 @@ public class AlunoMB {
      * true.
      */
     public boolean verificarResponsavel(){
+        // Indica se o nome foi preenchido
+        boolean respOk = !(aluno.getResponsavel().isEmpty());
+        // Indica se o parentesco foi preenchido
+        boolean parOk = !aluno.getRespParentesco().isEmpty();
+        // Indica se o telefone foi preenchido
+        boolean telOk = !aluno.getRespTelefone().isEmpty();
+                
         if (aluno.maioridade()){
-            return true;
-        } else if (!aluno.getResponsavel().isEmpty() && 
-                   !aluno.getRespParentesco().isEmpty() &&
-                   !aluno.getRespTelefone().isEmpty()) {
-            // Menor de idade com responsável preenchido
-            return true;
+            return true; // Maior de idade
+        } else if ( respOk && parOk && telOk ) {
+            return true; // Menor de idade com responsável preenchido
         }
-        // Menor de idade sem responsável preenchido
-        return false;
+        return false;    // Menor de idade sem responsável preenchido
     }
     
     /**

@@ -148,9 +148,9 @@
                     <p:message for="campoTelefone"/>
 
                     <h:outputText value="Data de nascimento:"/>
-                    <p:inputMask id="campoData" value="#{alunoMB.aluno.dataNascimento}"
+                    <p:calendar id="campoData" value="#{alunoMB.aluno.dataNascimento}"
                                 required="true" requiredMessage="Campo obrigatório"
-                                mask="99/99/9999"/>
+                                navigator="true" maxdate="today" yearRange="c-120:c"/>
                     <p:message for="campoData"/>
                 </h:panelGrid>
                 

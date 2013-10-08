@@ -5,6 +5,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -24,8 +26,9 @@ public class Pessoa implements Serializable {
     @Column(nullable = false)
     private String telefone;
     @Column(nullable = false)
-    private String dataNascimento;
-    @Column(unique = true, nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dataNascimento;
+    @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String endereco;
@@ -35,7 +38,18 @@ public class Pessoa implements Serializable {
      * @return (está retornando false, por enquanto) indica true se for maior de idade ou false, caso contrário.
      */
     public boolean maioridade(){
-        return true;
+        Calendar nasc = Calendar.getInstance();
+        nasc.setTime(dataNascimento);
+        Calendar agora = Calendar.getInstance();
+        agora.setTime(new Date());
+        agora.roll(Calendar.YEAR, -18);
+        
+        if (agora.after(nasc)) {
+            return true;
+        } else {
+            return false;
+        }
+        
         /*
         if ((agora.YEAR - nasc.YEAR) > 18) {
             return true;
@@ -53,8 +67,7 @@ public class Pessoa implements Serializable {
                     return false;
                 }
             }
-        }
-        */
+        }*/
     }
     
     
@@ -89,16 +102,16 @@ public class Pessoa implements Serializable {
     /**
      * @return the dataNascimento
      */
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
     /**
      * @param dataNascimento a data de nascimento da pessoa.
      */
-    public void setDataNascimento(String dataNascimento) {
-        //SimpleDateFormat df = new SimpleDateFormat("DD/MM/yyyy");
-        //df.format(dataNascimento);
+    public void setDataNascimento(Date dataNascimento) {
+        SimpleDateFormat df = new SimpleDateFormat("DD/MM/yyyy");
+        df.format(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 
