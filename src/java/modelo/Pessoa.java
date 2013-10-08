@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,70 +17,60 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author Helismara
+ * @author jucylene
  */
 @MappedSuperclass
 public class Pessoa implements Serializable {
-    private static long serialVersionUID = 1L;
-
-    /**
-     * @return the serialVersionUID
-     */
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    /**
-     * @param aSerialVersionUID the serialVersionUID to set
-     */
-    public static void setSerialVersionUID(long aSerialVersionUID) {
-        serialVersionUID = aSerialVersionUID;
-    }
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String telefone;
+    @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String endereco;
-    private int idade;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     /**
-     * Diz se a pessoa tem mais de 18 anos.
-     * @return valor booleano indicando true, se for maior de idade e false,
-     * caso contrário.
+     * (Não implementado) Testa se a Pessoa é maior de idade.
+     * @return (está retornando false, por enquanto) indica true se for maior de idade ou false, caso contrário.
      */
     public boolean maioridade(){
-        if (getIdade() < 18){
+        Calendar nasc = Calendar.getInstance();
+        nasc.setTime(dataNascimento);
+        Calendar agora = Calendar.getInstance();
+        agora.setTime(new Date());
+        agora.roll(Calendar.YEAR, -18);
+        
+        if (agora.after(nasc)) {
+            return true;
+        } else {
             return false;
         }
-        return true;
-     }
+        
+        /*
+        if ((agora.YEAR - nasc.YEAR) > 18) {
+            return true;
+        } else if ((agora.YEAR - nasc.YEAR) < 18) {
+            return false;
+        } else {
+            if (agora.MONTH > nasc.MONTH) {
+                return true;
+            } else if (agora.MONTH < nasc.MONTH) {
+                return false;
+            } else {
+                if (agora.DAY_OF_MONTH > nasc.DAY_OF_MONTH) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }*/
+    }
     
-    /**
-     * @return the idade
-     */
-    public int getIdade() {
-        return idade;
-    }
-
-    /**
-     * @param idade the idade to set
-     */
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
+    
     /**
      * @return the nome
      */
@@ -115,9 +107,11 @@ public class Pessoa implements Serializable {
     }
 
     /**
-     * @param dataNascimento the dataNascimento to set
+     * @param dataNascimento a data de nascimento da pessoa.
      */
     public void setDataNascimento(Date dataNascimento) {
+        SimpleDateFormat df = new SimpleDateFormat("DD/MM/yyyy");
+        df.format(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 
@@ -149,10 +143,23 @@ public class Pessoa implements Serializable {
         this.endereco = endereco;
     }
     
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -163,7 +170,7 @@ public class Pessoa implements Serializable {
             return false;
         }
         Pessoa other = (Pessoa) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -171,7 +178,6 @@ public class Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "Modelo.Pessoa[ id=" + getId() + " ]";
+        return "modelo.Pessoa[ id=" + id + " ]";
     }
-    
 }

@@ -2,19 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Beans;
+package beans;
 
-import Dao.ProfessorJpaController;
-import Dao.exceptions.NonexistentEntityException;
+import dao.ProfessorJpaController;
+import dao.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.persistence.EntityManagerFactory;
-import Modelo.Professor;
-import Util.EMF;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.persistence.EntityExistsException;
+import javax.persistence.RollbackException;
+import modelo.Professor;
+import util.EMF;
+import util.FacesUtil;
 
 /**
  *
@@ -24,171 +26,140 @@ import java.util.logging.Logger;
 @RequestScoped
 public class ProfessorMB {
 
-    private EntityManagerFactory emf = EMF.getFactory();
-    private ProfessorJpaController dao = new ProfessorJpaController(emf);
-    private Professor professor = new Professor();
-    
-    private List<Professor> listProfessores = new ArrayList<Professor>();
+    private Professor prof = new Professor();
+    private ProfessorJpaController dao = new ProfessorJpaController(EMF.getEntityManagerFactory());
+    private List<Professor> profs;
+    private String pesquisaNome;
     /**
-     * Creates a new instance of FuncionarioMB
+     * Creates a new instance of ProfessorMB
      */
-    
-    private String mensagem;
-    private String pesqProf;
-    //private Object ex;
-    
-    
     public ProfessorMB() {
-        listar();
+        pesquisar();
     }
     
-    public void inserir(){
+    
+    public void carregar(Professor pf){
+        setProf(pf);
+    }
+    
+    public void cadastrar(){
         try{
-            getDao().create(professor);
-            this.setMensagem(this.getProfessor().getNome()+ " cadastrado com sucesso!");
-            professor = new Professor();
-        }catch(Exception ex){
-            setMensagem(this.getProfessor().getNome() + "cadastro não realizado!");
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-            //e.printStackTrace();
+            
+                dao.create(prof);
+                FacesUtil.adicionarMensagem("formulario", "O professor foi cadastrado");
+                prof = new Professor();
+            
+        } catch (EntityExistsException e) {
+            FacesUtil.adicionarMensagem("formulario", "Este aluno já está cadastrado");
+        } catch (RollbackException e) {
+            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                    + "no cadastro");
         }
-        listar();
+        pesquisar();
     }
     
-    public void alterar() throws Exception {
-        try {
-            dao.edit(professor);
-            setMensagem(this.getProfessor().getNome() + " alterado com sucesso!");
-            professor = new Professor();
-        } catch (NonexistentEntityException ex) {
-            this.setMensagem("id não existe");
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        listar();
-    }
-
-    public void excluir() {
-        try {
-            dao.destroy(professor.getId());
-            setMensagem(this.getProfessor().getNome() + " excluído com sucesso!");
-            professor = new Professor();
-        } catch (NonexistentEntityException ex) {
-            this.setMensagem("id não existe");
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        listar();
+    
+    /**
+     * Limpa o formulário de cadastro de alunos.
+     * Apenas atribui um novo Aluno para este bean.
+     */
+    public void cancelar(){
+        setProf(new Professor());
     }
     
-     public void excluirTabela(Long id) {
+    public void excluir(Long id){
         try {
             dao.destroy(id);
-            setMensagem("Excluído com sucesso!");
-            professor = new Professor();
+            FacesUtil.adicionarMensagem("formulario", "O professor foi excluído");
         } catch (NonexistentEntityException ex) {
-            this.setMensagem("Cadastro não pode ser excluído");
+            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
+                    + "cadastrado ou já havia sido excluído");
             Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        listar();
+        pesquisar();
     }
     
-     public void cancelar(){
-        professor = new Professor();
-    }
-     
-     
-
-    public void listar(){
-        listProfessores = dao.findProfessorEntities();
-    }
     
-    public void pesquisarProfessores(){
-        listProfessores = new ArrayList<Professor>();
-        for(Professor pf : dao.findProfessorEntities()){
-            if ((pf.getNome().toLowerCase().contains(pesqProf))) {
-                listProfessores.add(pf);
-            }
+    public void alterar(){
+        try {
+             dao.edit(prof);
+             prof = new Professor();
+             FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
+            
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
+                    + "cadastrado ou já havia sido excluído");
+        } catch (Exception ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                    + "na alteração");
         }
-        setPesqProf("");
+        
+        pesquisar();
     }
     
-    public EntityManagerFactory getEmf() {
-        return emf;
+    /**
+     * Pesquisa os alunos por nome de acordo com o atributo pesquisa. Não
+     * retorna nada. Para acessar os resultados, utilize o atributo alunos deste
+     * bean.
+     */
+    public void pesquisar(){
+        profs = dao.findProfessorEntities();
+    }
+    
+    public void pesquisarNome(){
+        profs = new ArrayList<Professor>();
+        for(Professor pf : dao.findProfessorEntities())
+        {
+            if(pf.getNome().toLowerCase().contains(pesquisaNome))
+            {
+                profs.add(pf);
+            }
+            setPesquisaNome("");
+        }
+        
     }
 
     /**
-     * @param emf the emf to set
+     * @return the prof
      */
-    public void setEmf(EntityManagerFactory emf) {
-        this.emf = emf;
+    public Professor getProf() {
+        return prof;
     }
 
     /**
-     * @return the dao
+     * @param prof the prof to set
      */
-    public ProfessorJpaController getDao() {
-        return dao;
+    public void setProf(Professor prof) {
+        this.prof = prof;
     }
 
     /**
-     * @param dao the dao to set
+     * @return the profs
      */
-    public void setDao(ProfessorJpaController dao) {
-        this.dao = dao;
+    public List<Professor> getProfs() {
+        return profs;
     }
 
     /**
-     * @return the funcionario
+     * @param profs the profs to set
      */
-    public Professor getProfessor() {
-        return professor;
+    public void setProfs(List<Professor> profs) {
+        this.profs = profs;
     }
 
     /**
-     * @param funcionario the funcionario to set
+     * @return the pesquisa
      */
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public String getPesquisaNome() {
+        return pesquisaNome;
     }
 
     /**
-     * @return the funcionarios
+     * @param pesquisa the pesquisa to set
      */
-    public List<Professor> getProfessores() {
-        return listProfessores;
-    }
-
-    /**
-     * @param funcionarios the funcionarios to set
-     */
-    public void setProfessores(List<Professor> professores) {
-        this.listProfessores = professores;
-    }
-
-    /**
-     * @return the mensagem
-     */
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    /**
-     * @param mensagem the mensagem to set
-     */
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    /**
-     * @return the pesqProf
-     */
-    public String getPesqProf() {
-        return pesqProf;
-    }
-
-    /**
-     * @param pesqProf the pesqProf to set
-     */
-    public void setPesqProf(String pesqProf) {
-        this.pesqProf = pesqProf;
+    public void setPesquisaNome(String pesquisa) {
+        this.pesquisaNome = pesquisa;
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package modelo;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -15,21 +15,50 @@ import javax.persistence.Id;
  * @author Helismara
  */
 @Entity
-public class Professor extends Funcionario implements Serializable {
+public class Professor extends Pessoa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String funcao;
+    private String salario;
     private String habilidade;
     private String formacao;
-    private Funcionario f;
 
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
-        this.id = f.getId();
+        this.id = id;
+    }
+
+    /**
+     * @return the funcao
+     */
+    public String getFuncao() {
+        return funcao;
+    }
+
+    /**
+     * @param funcao the funcao to set
+     */
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
+    /**
+     * @return the salario
+     */
+    public String getSalario() {
+        return salario;
+    }
+
+    /**
+     * @param salario the salario to set
+     */
+    public void setSalario(String salario) {
+        this.salario = salario;
     }
 
     /**
@@ -60,7 +89,6 @@ public class Professor extends Funcionario implements Serializable {
         this.formacao = formacao;
     }
     
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -82,8 +110,9 @@ public class Professor extends Funcionario implements Serializable {
     }
 
     @Override
+    
     public String toString() {
-        return "Modelo.Professor[ id=" + id + " ]";
+        return "modelo.Professor[ id=" + id + " ]";
     }
     
 }

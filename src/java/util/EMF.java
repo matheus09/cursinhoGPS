@@ -1,25 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package Util;
+package util;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
 /**
  *
- * @author Helismara
+ * @author Monnalisa Medeiros
  */
 public class EMF {
-    private static EntityManagerFactory factory;
-    
-    public static EntityManagerFactory getFactory()
-    {
-        if(factory == null){
-            factory = Persistence.createEntityManagerFactory("CursinhoGPSJuhPU");
-        }
-        return factory;
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("CursinhoPU");
+
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return emf;
     }
 }
