@@ -10,34 +10,34 @@
         Hello from Facelets
         
         <!--h:link outcome="welcomePrimefaces" value="Primefaces welcome page" /-->
-        <h:form>
+        <h:form id="form">
         <br />
         <h:commandLink value="Manter Funcionários" action="/manterFuncionario.xhtml" />
         <br />
-        <p:outputLabel value="Nome:"/>
+        <h:outputLabel value="Nome:"/>
         <p:inputText value="#{funcionarioMB.func.nome}"/>
         <br/>
-        <p:outputLabel value="Telefone:"/>
+        <h:outputLabel value="Telefone:"/>
         <p:inputText value="#{funcionarioMB.func.telefone}"/>
         <br/>
-        <p:outputLabel value="Data de Nascimento:"/>
+        <h:outputLabel value="Data de Nascimento:"/>
         <p:calendar value="#{funcionarioMB.func.dataNascimento}"/>
         <br/>
-        <p:outputLabel value="Email:"/>
+        <h:outputLabel value="Email:"/>
         <p:inputText value="#{funcionarioMB.func.email}"/>
         <br/>
-        <p:outputLabel value="Endereço:"/>
+        <h:outputLabel value="Endereço:"/>
         <p:inputText value="#{funcionarioMB.func.endereco}"/>
         <br/>
-        <p:outputLabel value="Função:"/>
+        <h:outputLabel value="Função:"/>
         <p:inputText value="#{funcionarioMB.func.funcao}"/>
         <br/>
-        <p:outputLabel value="Salario:"/>
+        <h:outputLabel value="Salario:"/>
         <p:inputText value="#{funcionarioMB.func.salario}"/>
         
         <br/>
-        <p:commandButton value="Inserir" action="#{funcionarioMB.inserir()}"
-                             ajax="false"/>
+        <p:commandButton value="Inserir" actionListener="#{funcionarioMB.inserir()}"
+                             update="form"/>
         </h:form>
     </h:body>
 </html>

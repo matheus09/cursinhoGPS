@@ -15,6 +15,7 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
 import modelo.Funcionario;
 import util.EMF;
+import util.FacesUtil;
 
 /**
  *
@@ -23,34 +24,75 @@ import util.EMF;
 @ManagedBean
 @RequestScoped
 public class FuncionarioMB {
+
     private FuncionarioJpaController dao = new FuncionarioJpaController(EMF.getFactory());
-    private Funcionario func = new Funcionario();
+    private Funcionario func;
     private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
-    
+    private String nomePesq;
+
     /**
      * Creates a new instance of FuncionarioMB
      */
     public FuncionarioMB() {
+        func = new Funcionario();
         listarFuncionarios();
     }
+
+    public void limpar(){
+        setFunc(new Funcionario());
+    }
     
-    public void inserir(){
-        dao.create(func);
-        func = new Funcionario();
+    public void carregar(Funcionario func){
+        setFunc(func);
+    }
+    
+    public void inserir() {
+        try {
+            func.setId(null);
+            dao.create(func);
+            FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi cadastrado");
+            func = new Funcionario();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void excluir(){
+    public void pesquisarPorNome(){
+        funcionarios = new ArrayList<Funcionario>();
+        for(Funcionario f : dao.findFuncionarioEntities()){
+            if(f.getNome().toUpperCase().contains(getNomePesq().toUpperCase())){
+                funcionarios.add(f);
+            }
+        }
+        setNomePesq("");
+    }
+
+    public void alterar(){
         try {
-            dao.destroy(func.getId());
+            dao.edit(func);
+            FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi alterado");
+            func = new Funcionario();
         } catch (NonexistentEntityException ex) {
+            Logger.getLogger(FuncionarioMB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(FuncionarioMB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void listarFuncionarios(){
+    public void excluir(Long id) {
+        try {
+            dao.destroy(id);
+            FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi excluído");
+            func = new Funcionario();
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(FuncionarioMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void listarFuncionarios() {
         funcionarios = dao.findFuncionarioEntities();
     }
-    
+
     /**
      * @return the dao
      */
@@ -92,5 +134,18 @@ public class FuncionarioMB {
     public void setFuncionarios(List<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
     }
-    
+
+    /**
+     * @return the nomePesq
+     */
+    public String getNomePesq() {
+        return nomePesq;
+    }
+
+    /**
+     * @param nomePesq the nomePesq to set
+     */
+    public void setNomePesq(String nomePesq) {
+        this.nomePesq = nomePesq;
+    }
 }

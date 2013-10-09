@@ -112,7 +112,7 @@
         <!--Formulario de crud-->
         
         <p:panel header="Manutenção de Alunos">
-            <h:form id="formCadFunc">
+            <h:form id="formCadAlunos">
                 <h:inputHidden value="#{funcionarioMB.func.id}"/>
                 <h:panelGrid columns="3">
                     <h:outputText value="Nome:"/>
@@ -149,21 +149,21 @@
                     <p:message for="campoFuncao"/>
 
                     <h:outputText value="Salario:"/>
-                    <p:inputText id="campoSalario" value="#{funcionarioMB.func.salario}"
+                    <p:inputText id="campoEmail" value="#{funcionarioMB.func.salario}"
                                  required="true" requiredMessage="Campo obrigatório"/>
                     <p:message for="campoSalario"/>
 
                 </h:panelGrid>
                 
-                <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" ajax="false"/>
+                <p:commandButton value="Cadastrar" action="#{funcionarioMB.cadastrar()}" ajax="false"/>
                 <p:commandButton value="Alterar" action="#{funcionarioMB.alterar()}" ajax="false"/>
             </h:form>
             
             <h:form>
                 <p:commandButton value="Limpar" action="#{funcionarioMB.limpar()}" ajax="false"/>
             </h:form>
-            <p:messages for="formCadFunc"/>
             
+            <p:messages for="formCadAlunos"/>
         </p:panel>
         
         <!--Formularios de pesquisa-->
@@ -172,9 +172,9 @@
             <h:form id="formPesqFunc">
                 <h:panelGrid columns="3">
                     <h:outputLabel value="Nome do Funcionario:"/>
-                    <p:inputText id="campoPesqNome" value="#{funcionarioMB.nomePesq}"
+                    <p:inputText id="campoPesqNome" value="#{funcionarioMB.pesquisa}"
                                  required="true" requiredMessage="Campo obrigatório"/>
-                    <p:message for="formPesqFunc"/>
+                    <p:message for="formPesqAlunos"/>
                 </h:panelGrid>
                 <p:commandButton value="Pesquisar" ajax="false"
                                  action="#{funcionarioMB.pesquisarPorNome()}"/>
@@ -185,7 +185,7 @@
         <p:panel header="Pesquisar Todos os Alunos">
             <h:form id="formPesquisaTodos">
                 <p:commandButton value="Pesquisar todos" ajax="false"
-                                 action="#{funcionarioMB.listarFuncionarios()}"/>
+                                 action="#{funcionarioMB.getTodos()}"/>
             </h:form>
         </p:panel>
     </body>
