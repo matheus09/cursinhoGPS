@@ -51,11 +51,9 @@
                         </p:column>
                         <p:column >  
                             <f:facet name="header">
-                                <h:outputText value="Opção de exclusão" />   
-                            </f:facet>   
-                            <h:commandLink action="#{salaMB.excluirSala(s.codigoSala)}">
-                                <h:outputText value="Excluir"/> 
-                            </h:commandLink>
+                                <h:outputText value="Excluir Sala" />   
+                            </f:facet>
+                            <p:commandButton action="#{salaMB.excluirSala(s.codigoSala)}" image="ui-icon-trash" update=":formPesquisa, :tabela, :formulario"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -76,9 +74,9 @@
                                 <f:validateRegex for="capacidade" pattern="\d*[0-9](d*[0-9])?"/>
                             </p:inputText><p:message for="capacidade"/>
                         </h:panelGrid>
-                        <p:commandButton value="Cadastrar" action="#{salaMB.inserirSala()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton value="Alterar" action="#{salaMB.alterarSala()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton value="Cancelar" action="#{salaMB.cancelar()}" update=":formPesquisa, formulario"/><br/><br/>
+                        <p:commandButton value="Cadastrar" action="#{salaMB.inserirSala()}" image="ui-icon-disk" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton value="Alterar" action="#{salaMB.alterarSala()}" image="ui-icon-pencil" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton value="Cancelar" action="#{salaMB.cancelar()}" image="ui-icon-cancel" update=":formPesquisa, formulario"/><br/><br/>
                         <b><h:outputText value="#{salaMB.mensagem}" style="font: bolder"/></b>
                     </p:panel>
                 </h:form>
@@ -92,16 +90,15 @@
                             <h:outputLabel value="Nome da Sala:*"/>
                             <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="#{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
                         </h:panelGrid>
-                        <p:commandButton value="Pesquisar" action="#{salaMB.pesquisarPorNomeDeSala()}" update="formPesquisa, :tabela, :formulario"/>
+                        <p:commandButton value="Pesquisar" action="#{salaMB.pesquisarPorNomeDeSala()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
                 <hr></hr>
                 
                 <h:form id="formPesquisaTodos">
                     <p:panel id="formPanelPesquisa" header="Pesquisar Todas Salas">
-                        <p:commandButton value="Pesquisar Todos" action="#{salaMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
+                        <p:commandButton value="Pesquisar Todos" action="#{salaMB.pesquisar()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
-
     </h:body>
 </html>

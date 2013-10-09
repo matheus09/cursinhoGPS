@@ -15,6 +15,7 @@ import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import modelo.Sala;
+import util.EMF;
 
 /**
  *
@@ -27,8 +28,7 @@ public class SalaMB {
     /**
      * Creates a new instance of SalaMB
      */
-    static EntityManagerFactory factory = Persistence.createEntityManagerFactory("CursinhoGPSPU");
-    SalaJpaController daoSala = new SalaJpaController(factory);
+    SalaJpaController daoSala = new SalaJpaController(EMF.getEntityManagerFactory());
     
     private Sala sala = new Sala();
     private List<Sala> salas = new ArrayList<Sala>();
@@ -75,6 +75,7 @@ public class SalaMB {
             setMensagem("Cadastro Realizado com Sucesso");
         }catch(Exception ex){
             setMensagem("Cadastro já existente no sistema");
+            cancelar();
             Logger.getLogger(SalaMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         pesquisar();
