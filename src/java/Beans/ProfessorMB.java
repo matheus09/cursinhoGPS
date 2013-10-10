@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityExistsException;
 import javax.persistence.RollbackException;
 import modelo.Professor;
@@ -29,7 +31,7 @@ public class ProfessorMB {
     private Professor prof = new Professor();
     private ProfessorJpaController dao = new ProfessorJpaController(EMF.getEntityManagerFactory());
     private List<Professor> profs;
-    private String pesquisaNome;
+    private String pesquisa;
     /**
      * Creates a new instance of ProfessorMB
      */
@@ -55,19 +57,86 @@ public class ProfessorMB {
             FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
                     + "no cadastro");
         }
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome","Testing");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         pesquisar();
     }
+    
+    /*
+    public void alterar(Long id){
+        
+        try {
+            FacesUtil.adicionarMensagem("formulario", "Chegou em alterar!!!");
+            if(id != 0)
+            {
+                 dao.edit(dao.findProfessor(id));
+                 FacesUtil.adicionarMensagem(getProf().getNome() + "formulario", "O professor foi alterado");
+            }
+            else {
+                FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
+                        + "selecionado. Clique em um professor para alterá-lo.");
+            }
+            
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
+                    + "cadastrado ou já havia sido excluído");
+        } catch (Exception ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                    + "na alteração");
+        }
+        
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        //context.addMessage(null, new FacesMessage("Erro no banco de dados"));
+        context.addMessage("formulario:nomeDoFunc", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Alterado"));  
+        
+        pesquisar();
+    }  
+    * //
+    * 
+    * 
+    * 
     
     
     /**
      * Limpa o formulário de cadastro de alunos.
      * Apenas atribui um novo Aluno para este bean.
      */
+    
+    public void alterar(){
+        try {
+            if(prof.getId() != null){
+                    dao.edit(prof);
+                    prof = new Professor();
+                    FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
+           } else {
+                FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
+                        + "selecionado. Clique em um professor para alterá-lo.");
+            }
+            
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
+                    + "cadastrado ou já havia sido excluído");
+        } catch (Exception ex) {
+            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                    + "na alteração");
+        }
+        pesquisar();
+    }
+    
+    
+    
+    
     public void cancelar(){
         setProf(new Professor());
     }
     
     public void excluir(Long id){
+        
         try {
             dao.destroy(id);
             FacesUtil.adicionarMensagem("formulario", "O professor foi excluído");
@@ -80,24 +149,7 @@ public class ProfessorMB {
     }
     
     
-    public void alterar(){
-        try {
-             dao.edit(prof);
-             prof = new Professor();
-             FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
-            
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
-                    + "cadastrado ou já havia sido excluído");
-        } catch (Exception ex) {
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
-                    + "na alteração");
-        }
-        
-        pesquisar();
-    }
+    
     
     /**
      * Pesquisa os alunos por nome de acordo com o atributo pesquisa. Não
@@ -108,18 +160,33 @@ public class ProfessorMB {
         profs = dao.findProfessorEntities();
     }
     
-    public void pesquisarNome(){
-        profs = new ArrayList<Professor>();
-        for(Professor pf : dao.findProfessorEntities())
-        {
-            if(pf.getNome().toLowerCase().contains(pesquisaNome))
-            {
-                profs.add(pf);
-            }
-            setPesquisaNome("");
-        }
-        
+    public void pesquisarPorNome(){
+        profs = dao.pesquisarPorNome(pesquisa);
     }
+    
+    /**
+     * Limpa a pesquisa e pega todos os alunos. Não retorna nada. Para acessar
+     * os resultados, utilize o atributo alunos deste bean.
+     */
+    public void getTodos(){
+        pesquisa = "";
+        getProfs();
+    }
+    
+    /**
+     * @return the pesquisa
+     */
+    public String getPesquisa() {
+        return pesquisa;
+    }
+
+    /**
+     * @param pesquisa the pesquisa to set
+     */
+    public void setPesquisa(String pesquisa) {
+        this.pesquisa = pesquisa;
+    }
+    
 
     /**
      * @return the prof
@@ -149,17 +216,4 @@ public class ProfessorMB {
         this.profs = profs;
     }
 
-    /**
-     * @return the pesquisa
-     */
-    public String getPesquisaNome() {
-        return pesquisaNome;
-    }
-
-    /**
-     * @param pesquisa the pesquisa to set
-     */
-    public void setPesquisaNome(String pesquisa) {
-        this.pesquisaNome = pesquisa;
-    }
 }
