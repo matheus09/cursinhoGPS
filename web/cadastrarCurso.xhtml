@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Cadastro de cursos</title>
     </h:head>
@@ -11,7 +11,7 @@
                 <h:form></h:form>
                 
                 <h:form id="tabela">
-                    <p:dataTable id="dataTable" var="c" value="#{cursoMB.listaCurso}" paginator="true" rows="5"  
+                    <p:dataTable id="dataTable" var="c" emptyMessage="Nenhum Curso cadastrado" value="#{cursoMB.listaCurso}" paginator="true" rows="5"  
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
                                  rowsPerPageTemplate="5,10,15,20,25">
                         <f:facet name="header">  
@@ -21,7 +21,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Nome" />
                             </f:facet>
-                            <p:commandLink value="#{c.nome}" update=":formulario">
+                            <p:commandLink ajax="false" value="#{c.nome}" update=":formularioCurso">
                                 <f:setPropertyActionListener value="#{c}" target="#{cursoMB.curso}"/> 
                                 <h:outputText value="${c.nome}"/>
                             </p:commandLink>
@@ -30,7 +30,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Duração" />   
                             </f:facet>
-                            <p:commandLink value="#{c.duracao}" update=":formulario">
+                            <p:commandLink ajax="false" value="#{c.duracao}" update=":formularioCurso">
                                 <f:setPropertyActionListener value="#{c}" target="#{cursoMB.curso}"/> 
                             <h:outputText value="${c.duracao}"/>
                             </p:commandLink>
@@ -39,7 +39,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Descrição" />   
                             </f:facet>   
-                            <p:commandLink value="#{c.descricao}" update=":formulario">
+                            <p:commandLink ajax="false" value="#{c.descricao}" update=":formularioCurso">
                                 <f:setPropertyActionListener value="#{c}" target="#{cursoMB.curso}"/> 
                             <h:outputText value="${c.descricao}"/>
                             </p:commandLink>
@@ -48,7 +48,7 @@
                             <f:facet name="header">
                                 <h:outputText value="Quantidade Horas" />   
                             </f:facet>   
-                            <p:commandLink value="#{c.qtdHoras}" update=":formulario">
+                            <p:commandLink ajax="false" value="#{c.qtdHoras}" update=":formularioCurso">
                                 <f:setPropertyActionListener value="#{c}" target="#{cursoMB.curso}"/> 
                             <h:outputText value="${c.qtdHoras}"/>
                             </p:commandLink>
@@ -67,7 +67,7 @@
 
                 <!--Formulario de crud-->
 
-                <h:form id="formulario">
+                <h:form id="formularioCurso">
                     <p:panel id="formPanel" header="Cadastro de Cursos">
                         <h:inputHidden value="#{cursoMB.curso.id}"/>
                         <h:panelGrid columns="3">
@@ -79,14 +79,13 @@
                             <p:inputText size="40" id="duracao" value="#{cursoMB.curso.duracao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="duracao"/>
                             <h:outputLabel value="Quantidade de Horas:*"/>
                             <p:inputText size="8" id="qtdHoras" value="#{cursoMB.curso.qtdHoras}" required="true" requiredMessage="Campo Obrigatório">
-                           
                             </p:inputText><p:message for="qtdHoras"/>
                         
                         </h:panelGrid>
-                        <p:commandButton  ajax="false" value="Cadastrar" action="#{cursoMB.inserir()}" update=":formPesquisa, :tabela, formulario"/>
-                        <p:commandButton  ajax="false" value="Alterar" action="#{cursoMB.alterar()}" update=":formPesquisa, :tabela, formulario" />
-                        <p:commandButton  ajax="false" value="Cancelar" action="#{cursoMB.cancelar()}" update=":formPesquisa, :tabela, formulario"/><br/><br/>
-                        <b><h:outputText value="#{cursoMB.mensagem}" style="color: red"/></b>
+                        <p:commandButton  ajax="false" value="Cadastrar" action="#{cursoMB.inserir()}" image="ui-icon-disk" update=":formPesquisa, :tabela, :formularioCurso"/>
+                        <p:commandButton  ajax="false" value="Alterar" action="#{cursoMB.alterarCurso()}" image="ui-icon-pencil" update=":formPesquisa, :tabela, :formularioCurso" />
+                        <p:commandButton  ajax="false" value="Cancelar" action="#{cursoMB.cancelar()}" image="ui-icon-cancel" update=":formPesquisa, :tabela, :formularioCurso"/><br/><br/>
+                        <p:messages for="formularioCurso"/>
                     </p:panel>
                 </h:form>
                 <hr></hr>
@@ -99,14 +98,14 @@
                             <h:outputLabel value="Nome/Duração:*"/>
                             <p:inputText size="40" id="nomeDoCurso" style="text-transform: lowercase" maxlength="30" value ="#{cursoMB.pesqCurso}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDoCurso"/>
                         </h:panelGrid>
-                        <p:commandButton ajax="false" value="Pesquisar" action="#{cursoMB.pesquisarCursos()}" update="formPesquisa, :tabela, :formulario"/>
+                        <p:commandButton ajax="false" value="Pesquisar" action="#{cursoMB.pesquisarCursos()}" image="ui-icon-search" update="formPesquisa, :tabela, :formularioCurso"/>
                     </p:panel>
                 </h:form>
                 <hr></hr>
                 
                 <h:form id="formPesquisaTodos">
                     <p:panel id="formPanelPesquisa" header="Pesquisar todos os cursos">
-                        <p:commandButton ajax="false" value="Pesquisar Todos" action="#{cursoMB.pesquisar()}" update=":formPesquisa, :tabela, :formulario"/>
+                        <p:commandButton ajax="false" value="Pesquisar Todos" action="#{cursoMB.pesquisar()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formularioCurso"/>
                     </p:panel>
                 </h:form>
                 

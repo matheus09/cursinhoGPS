@@ -8,8 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- *
+ * UFRN - GESTÃO DE PROJETOS
  * @author Monnalisa Christina
+ * data: 10.10.2013
  */
 @Entity
 public class Curso implements Serializable {

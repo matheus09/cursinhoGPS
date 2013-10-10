@@ -11,11 +11,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityExistsException;
+import javax.persistence.RollbackException;
 import util.EMF;
+import util.FacesUtil;
 
 /**
- *
+ * UFRN - GESTÃO DE PROJETOS
  * @author Monnalisa Christina
+ * data: 10.10.2013
  */
 @ManagedBean
 @SessionScoped
@@ -24,22 +28,10 @@ public class CursoMB {
     private CursoJpaController dao = new CursoJpaController(EMF.getEntityManagerFactory());
     private Curso curso = new Curso();
     private List<Curso> listaCurso = new ArrayList<Curso>();
-    private String mensagem;
     private String pesqCurso;
-    
+
     public CursoMB() {
         pesquisar();
-    }
-
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    /**
-     * @param mensagem the mensagem to set
-     */
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
     }
 
     /**
@@ -55,7 +47,7 @@ public class CursoMB {
     public void setListaCurso(List<Curso> ListaCurso) {
         this.listaCurso = ListaCurso;
         pesquisar();
-        
+
     }
 
     /**
@@ -64,15 +56,15 @@ public class CursoMB {
     public Curso getCurso() {
         return curso;
     }
-    
+
     /**
      * @param curso the curso to set
      */
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-    
-     /**
+
+    /**
      * @return the pesqCurso
      */
     public String getPesqCurso() {
@@ -85,73 +77,65 @@ public class CursoMB {
     public void setPesqCurso(String pesqCurso) {
         this.pesqCurso = pesqCurso;
     }
-    
+
     public void inserir() {
         try {
             dao.create(curso);
-            this.setMensagem(this.getCurso().getNome() + " cadastrado com sucesso!");
             curso = new Curso();
-        } catch (Exception ex) {
-            setMensagem(this.getCurso().getNome() + "cadastro não realizado!");
-            Logger.getLogger(CursoMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formularioCurso", "O Curso foi cadastrado");
+        } catch (EntityExistsException e) {
+            FacesUtil.adicionarMensagem("formularioCurso", "Este Curso já está cadastrado");
+        } catch (RollbackException e) {
+            FacesUtil.adicionarMensagem("formularioCurso", "Erro: Algo deu errado " + "no cadastro");
         }
         pesquisar();
     }
 
-    public void alterar() throws Exception {
+   
+    public void alterarCurso() {
         try {
             dao.edit(curso);
-            setMensagem(this.getCurso().getNome() + " alterado com sucesso!");
             curso = new Curso();
+            FacesUtil.adicionarMensagem("formularioCurso", "O Curso foi alterado");
         } catch (NonexistentEntityException ex) {
-            this.setMensagem("id não existe");
             Logger.getLogger(CursoMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formularioCurso", "Erro: O Curso não foi " + "cadastrado ou já havia sido excluído");
+        } catch (Exception ex) {
+            Logger.getLogger(CursoMB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesUtil.adicionarMensagem("formularioCurso", "Erro: Algo deu errado " + "na alteração");
         }
         pesquisar();
     }
 
-    public void excluir() {
-        try {
-            dao.destroy(curso.getId());
-            setMensagem(this.getCurso().getNome() + " excluído com sucesso!");
-            curso = new Curso();
-        } catch (NonexistentEntityException ex) {
-            this.setMensagem("id não existe");
-            Logger.getLogger(CursoMB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        pesquisar();
-    }
-    
     public void excluirTabela(Long id) {
         try {
             dao.destroy(id);
-            setMensagem("Excluído com sucesso!");
+            FacesUtil.adicionarMensagem("formularioCurso", "O Curso foi excluído");
             curso = new Curso();
         } catch (NonexistentEntityException ex) {
-            this.setMensagem("Cadastro não pode ser excluído");
+            FacesUtil.adicionarMensagem("formularioCurso", "Erro: O Curso não foi " + "cadastrado ou já havia sido excluído");
             Logger.getLogger(CursoMB.class.getName()).log(Level.SEVERE, null, ex);
         }
         pesquisar();
     }
-    
-     public void cancelar(){
-        curso = new Curso();
+
+    public void cancelar() {
+        setCurso(new Curso());
+
     }
 
     public void pesquisar() {
-        listaCurso =  dao.findCursoEntities();
-        
+        listaCurso = dao.findCursoEntities();
+
     }
-    
-     public void pesquisarCursos(){
+
+    public void pesquisarCursos() {
         listaCurso = new ArrayList<Curso>();
-        for(Curso cr : dao.findCursoEntities()){
+        for (Curso cr : dao.findCursoEntities()) {
             if ((cr.getNome().toLowerCase().contains(pesqCurso) || (cr.getDuracao().toLowerCase().contains(pesqCurso)))) {
                 listaCurso.add(cr);
             }
         }
         setPesqCurso("");
     }
-     
 }
-

@@ -4,8 +4,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
- * @author Monnalisa Medeiros
+ * UFRN - GESTÃO DE PROJETOS
+ * @author Monnalisa Christina
+ * data: 10.10.2013
  */
 public class EMF {
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("cursinhoGPSPU");
