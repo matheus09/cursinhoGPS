@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Manutenção de Salas</title>
+    </h:head>
+    <h:body>
+                <h:form></h:form>
+                
+                <h:form id="tabela">
+                    <p:dataTable id="dataTable" var="s" value="#{salaMB.salas}" paginator="true" rows="5"  
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                 rowsPerPageTemplate="5,10,15,20,25">
+                        <f:facet name="header">  
+                            <h:outputText value="Todas as Salas" /> 
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Código da Sala" />
+                            </f:facet>
+                            <p:commandLink value="#{s.codigoSala}" update=":formulario">
+                                <f:setPropertyActionListener value="#{s}" target="#{salaMB.sala}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        <p:column >  
+                            <f:facet name="header">
+                                <h:outputText value="Nome da Sala" />   
+                            </f:facet>
+                            <p:commandLink value="#{s.nomeSala}" update=":formulario">
+                                <f:setPropertyActionListener value="#{s}" target="#{salaMB.sala}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        <p:column >  
+                            <f:facet name="header">
+                                <h:outputText value="Descrição" />   
+                            </f:facet>   
+                            <p:commandLink value="#{s.descricao}" update=":formulario">
+                                <f:setPropertyActionListener value="#{s}" target="#{salaMB.sala}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        <p:column >  
+                            <f:facet name="header">
+                                <h:outputText value="Capacidade" />   
+                            </f:facet>   
+                            <p:commandLink value="#{s.capacidade}" update=":formulario">
+                                <f:setPropertyActionListener value="#{s}" target="#{salaMB.sala}"/> 
+                            </p:commandLink>
+                        </p:column>
+                        <p:column >  
+                            <f:facet name="header">
+                                <h:outputText value="Excluir Sala" />   
+                            </f:facet>
+                            <p:commandButton action="#{salaMB.excluirSala(s.codigoSala)}" image="ui-icon-trash" update=":formPesquisa, :tabela, :formulario"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <hr></hr>
+
+                <!--Formulario de crud-->
+
+                <h:form id="formulario">
+                    <p:panel id="formPanel" header="Manutenção de Salas">
+                        <h:inputHidden value="#{salaMB.sala.codigoSala}"/>
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Nome da Sala:*"/>
+                            <p:inputText id="nomeDaSala" maxlength="30" value="#{salaMB.sala.nomeSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
+                            <h:outputLabel value="Descrição:*"/>
+                            <p:inputText id="descricao" maxlength="200" value="#{salaMB.sala.descricao}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="descricao"/>
+                            <h:outputLabel value="Capacidade:*"/>
+                            <p:inputText id="capacidade" value="#{salaMB.sala.capacidade}" validatorMessage="Campo Só Permite Números" required="true" requiredMessage="Campo Obrigatório">
+                                <f:validateRegex for="capacidade" pattern="\d*[0-9](d*[0-9])?"/>
+                            </p:inputText><p:message for="capacidade"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Cadastrar" action="#{salaMB.inserirSala()}" image="ui-icon-disk" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton value="Alterar" action="#{salaMB.alterarSala()}" image="ui-icon-pencil" update=":formPesquisa, :tabela, formulario"/>
+                        <p:commandButton value="Cancelar" action="#{salaMB.cancelar()}" image="ui-icon-cancel" update=":formPesquisa, formulario"/><br/><br/>
+                        <b><h:outputText value="#{salaMB.mensagem}" style="font: bolder"/></b>
+                    </p:panel>
+                </h:form>
+                <hr></hr>
+                
+                 <!--Formulario de pesquisa-->
+
+                <h:form id="formPesquisa">
+                    <p:panel id="formPanelPesquisa" header="Pesquisar Salas Por Nome">
+                        <h:panelGrid columns="3">
+                            <h:outputLabel value="Nome da Sala:*"/>
+                            <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="#{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
+                        </h:panelGrid>
+                        <p:commandButton value="Pesquisar" action="#{salaMB.pesquisarPorNomeDeSala()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formulario"/>
+                    </p:panel>
+                </h:form>
+                <hr></hr>
+                
+                <h:form id="formPesquisaTodos">
+                    <p:panel id="formPanelPesquisa" header="Pesquisar Todas Salas">
+                        <p:commandButton value="Pesquisar Todos" action="#{salaMB.pesquisar()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formulario"/>
+                    </p:panel>
+                </h:form>
+    </h:body>
+</html>

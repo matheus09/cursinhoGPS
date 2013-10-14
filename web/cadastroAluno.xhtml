@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cursinho</title>
+    </h:head>
+    <body>
+        <p:dataTable value="#{alunoMB.alunos}" emptyMessage="Nenhum aluno cadastrado"
+                     paginatorTemplate="{CurrentPageReport}   {FirstPageLink} {PreviousPageLink}
+                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     paginator="true" rows="5" rowsPerPageTemplate="5,10,15,20,25"
+                     var="aluno" id="tabAlunos">
+            <f:facet name="header">  
+                 <h:outputText value="Alunos" /> 
+            </f:facet>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="ID"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.id}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Aluno"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.nome}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="E-mail"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.email}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Endereço"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.endereco}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Telefone"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.telefone}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Nascimento"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.dataNascimento}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Responsável"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.responsavel}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Parentesco"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.respParentesco}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Telefone (Resp)"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{aluno.respTelefone}"
+                                   action="#{alunoMB.carregar(aluno)}"/>
+                </h:form>
+            </p:column>
+          
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Excluir"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandButton ajax="false" value="X" 
+                                     action="#{alunoMB.excluir(aluno.id)}"/>
+                </h:form>
+            </p:column>
+        </p:dataTable>
+        <hr></hr>
+        
+        <!--Formulario de crud-->
+        
+        <p:panel header="Manutenção de Alunos">
+            <h:form id="formCadAlunos">
+                <h:inputHidden value="#{alunoMB.aluno.id}"/>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Nome:"/>
+                    <p:inputText id="campoNome" value="#{alunoMB.aluno.nome}" 
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoNome"/>
+
+                    <h:outputText value="E-mail:"/>
+                    <p:inputText id="campoEmail" value="#{alunoMB.aluno.email}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEmail"/>
+
+                    <h:outputText value="Digite seu endereço:"/>
+                    <p:inputText id="campoEndereco" value="#{alunoMB.aluno.endereco}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEndereco"/>
+
+                    <h:outputText value="Telefone:"/>
+                    <p:inputMask id="campoTelefone" mask="(99) 9999-9999"
+                                 value="#{alunoMB.aluno.telefone}"
+                                 required="true" requiredMessage="Campo obrigatório"
+                                 validatorMessage="Digite um telefone no formato (XX) XXXX-XXXX"/>
+                    <p:message for="campoTelefone"/>
+
+                    <h:outputText value="Data de nascimento:"/>
+                    <p:calendar id="campoData" value="#{alunoMB.aluno.dataNascimento}"
+                                required="true" requiredMessage="Campo obrigatório"
+                                navigator="true" maxdate="today" yearRange="c-120:c"/>
+                    <p:message for="campoData"/>
+                </h:panelGrid>
+                
+                <br/>
+                <h:outputText value="Os campos abaixo são obrigatórios apenas para menores de 18 anos"/>
+                <br/>
+                
+                <h:panelGrid columns="3">
+                    <h:outputText value="Responsável:"/>
+                    <p:inputText id="campoResp" value="#{alunoMB.aluno.responsavel}"/>
+                    <p:message for="campoResp"/>
+
+                    <h:outputText value="Parentesco:"/>
+                    <p:inputText id="campoRespParentesco" value="#{alunoMB.aluno.respParentesco}"/>
+                    <p:message for="campoRespParentesco"/>
+                    
+                    <h:outputText value="Telefone:"/>
+                    <p:inputMask id="campoRespTelefone" mask="(99) 9999-9999"
+                                 value="#{alunoMB.aluno.respTelefone}"
+                                 validatorMessage="Digite um telefone no formato (XX) XXXX-XXXX"/>
+                    <p:message for="campoRespTelefone"/>
+                </h:panelGrid>
+
+                <p:commandButton value="Cadastrar" action="#{alunoMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="Alterar" action="#{alunoMB.alterar()}" ajax="false"/>
+            </h:form>
+            
+            <h:form>
+                <p:commandButton value="Limpar" action="#{alunoMB.limpar()}" ajax="false"/>
+            </h:form>
+            
+            <p:messages for="formCadAlunos"/>
+        </p:panel>
+        
+        <!--Formularios de pesquisa-->
+
+        <p:panel header="Pesquisar Alunos Por Nome">
+            <h:form id="formPesqAlunos">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Nome do Aluno:"/>
+                    <p:inputText id="campoPesqNome" value="#{alunoMB.pesquisa}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="formPesqAlunos"/>
+                </h:panelGrid>
+                <p:commandButton value="Pesquisar" ajax="false"
+                                 action="#{alunoMB.pesquisarPorNome()}"/>
+            </h:form>
+        </p:panel>
+        <hr></hr>
+
+        <p:panel header="Pesquisar Todos os Alunos">
+            <h:form id="formPesquisaTodos">
+                <p:commandButton value="Pesquisar todos" ajax="false"
+                                 action="#{alunoMB.getTodos()}"/>
+            </h:form>
+        </p:panel>
+    </body>
+</html>

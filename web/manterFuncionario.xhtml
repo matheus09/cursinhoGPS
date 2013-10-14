@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Cursinho</title>
+    </h:head>
+    <body>
+        <p:dataTable value="#{funcionarioMB.funcionarios}" emptyMessage="Nenhum Funcionário Cadastrado"
+                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                     {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     paginator="true" rows="5" rowsPerPageTemplate="5,10,15,20,25"
+                     var="func" id="tabFuncs">
+            <f:facet name="header">
+                <h:outputText value="Funcionarios"/>
+            </f:facet>
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="ID"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.id}"
+                        action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Nome"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.nome}"
+                                   action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Telefone"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.telefone}"
+                                   action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Nascimento"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.dataNascimento}"
+                                   action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column> 
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="E-mail"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.email}"
+                                   action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Endereço"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandLink ajax="false" value="#{func.endereco}"
+                                   action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Função"/> 
+                </f:facet>
+                <h:form>
+                <p:commandLink ajax="false" value="#{func.funcao}" 
+                                     action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Salario"/> 
+                </f:facet>
+                <h:form>
+                <p:commandLink ajax="false" value="#{func.salario}" 
+                                     action="#{funcionarioMB.carregar(func)}"/>
+                </h:form>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">  
+                    <h:outputText value="Função"/> 
+                </f:facet>
+                <h:form>
+                    <p:commandButton ajax="false" value="X" 
+                                     action="#{funcionarioMB.excluir(func.id)}"/>
+                </h:form>
+            </p:column>
+
+        </p:dataTable>
+        <hr></hr>
+        
+        <!--Formulario de crud-->
+        
+        <p:panel header="Manutenção de Alunos">
+            <h:form id="formCadFunc">
+                <h:inputHidden value="#{funcionarioMB.func.id}"/>
+                <h:panelGrid columns="3">
+                    <h:outputText value="Nome:"/>
+                    <p:inputText id="campoNome" value="#{funcionarioMB.func.nome}" 
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoNome"/>
+
+                    <h:outputText value="E-mail:"/>
+                    <p:inputText id="campoEmail" value="#{funcionarioMB.func.email}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEmail"/>
+                    
+                    <h:outputText value="Telefone:"/>
+                    <p:inputMask id="campoTelefone" mask="(99) 9999-9999"
+                                 value="#{funcionarioMB.func.telefone}"
+                                 required="true" requiredMessage="Campo obrigatório"
+                                 validatorMessage="Digite um telefone no formato (XX) XXXX-XXXX"/>
+                    <p:message for="campoTelefone"/>
+
+                    <h:outputText value="Digite seu endereço:"/>
+                    <p:inputText id="campoEndereco" value="#{funcionarioMB.func.endereco}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEndereco"/>
+                    
+                    <h:outputText value="Data de nascimento:"/>
+                    <p:calendar id="campoData" value="#{funcionarioMB.func.dataNascimento}"
+                                required="true" requiredMessage="Campo obrigatório"
+                                navigator="true" maxdate="today" yearRange="c-120:c"/>
+                    <p:message for="campoData"/>
+
+                    <h:outputText value="Função:"/>
+                    <p:inputText id="campoFuncao" value="#{funcionarioMB.func.funcao}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoFuncao"/>
+
+                    <h:outputText value="Salario:"/>
+                    <p:inputText id="campoSalario" value="#{funcionarioMB.func.salario}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoSalario"/>
+
+                </h:panelGrid>
+                
+                <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" ajax="false"/>
+                <p:commandButton value="Alterar" action="#{funcionarioMB.alterar()}" ajax="false"/>
+            </h:form>
+            
+            <h:form>
+                <p:commandButton value="Limpar" action="#{funcionarioMB.limpar()}" ajax="false"/>
+            </h:form>
+            <p:messages for="formCadFunc"/>
+            
+        </p:panel>
+        
+        <!--Formularios de pesquisa-->
+
+        <p:panel header="Pesquisar Alunos Por Nome">
+            <h:form id="formPesqFunc">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Nome do Funcionario:"/>
+                    <p:inputText id="campoPesqNome" value="#{funcionarioMB.nomePesq}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="formPesqFunc"/>
+                </h:panelGrid>
+                <p:commandButton value="Pesquisar" ajax="false"
+                                 action="#{funcionarioMB.pesquisarPorNome()}"/>
+            </h:form>
+        </p:panel>
+        <hr></hr>
+
+        <p:panel header="Pesquisar Todos os Alunos">
+            <h:form id="formPesquisaTodos">
+                <p:commandButton value="Pesquisar todos" ajax="false"
+                                 action="#{funcionarioMB.listarFuncionarios()}"/>
+            </h:form>
+        </p:panel>
+    </body>
+</html>
+
