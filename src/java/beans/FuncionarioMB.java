@@ -50,6 +50,7 @@ public class FuncionarioMB {
         try {
             func.setId(null);
             dao.create(func);
+            listarFuncionarios();
             FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi cadastrado");
             func = new Funcionario();
         }catch(Exception e){
@@ -70,6 +71,7 @@ public class FuncionarioMB {
     public void alterar(){
         try {
             dao.edit(func);
+            listarFuncionarios();
             FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi alterado");
             func = new Funcionario();
         } catch (NonexistentEntityException ex) {
@@ -82,6 +84,7 @@ public class FuncionarioMB {
     public void excluir(Long id) {
         try {
             dao.destroy(id);
+            listarFuncionarios();
             FacesUtil.adicionarMensagem("formCadFunc", "O funcionário foi excluído");
             func = new Funcionario();
         } catch (NonexistentEntityException ex) {

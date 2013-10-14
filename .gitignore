@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 *.class
-
+#Occult Files
+*~
 # Package Files #
 *.jar
 *.war
