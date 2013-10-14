@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title> Bem-vindo ao Cursinho GPS </title>
+    </h:head>
+    <h:body>
+        <img style="display: block; margin-left: auto; margin-right: auto " src="img/imagem.jpg" />
+        <h:form id="form">  
+            <p:growl id="growl" showDetail="true" life="3000" />  
+
+            <p:dialog id="dialog" header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+
+                <h:panelGrid columns="2" cellpadding="5">  
+                    <h:outputLabel for="username" value="Usuário *" />  
+                    <p:inputText value="#{loginBean.username}"   
+                            id="username" required="true" label="username" />  
+
+                    <h:outputLabel for="password" value="Senha *" />  
+                    <h:inputSecret value="#{loginBean.password}"   
+                            id="password" required="true" label="password" />  
+
+                    <f:facet name="footer">  
+                        <p:commandButton id="loginButton" value="Login" update="form"   
+                            actionListener="#{loginBean.login}"
+                            action="#{loginBean.logado()}"/>  
+                    </f:facet>  
+                </h:panelGrid>  
+
+            </p:dialog>  
+        </h:form>
+    </h:body>
+</html>
