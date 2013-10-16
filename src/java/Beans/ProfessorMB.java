@@ -32,90 +32,95 @@ public class ProfessorMB {
     private ProfessorJpaController dao = new ProfessorJpaController(EMF.getEntityManagerFactory());
     private List<Professor> profs;
     private String pesquisa;
+
     /**
      * Creates a new instance of ProfessorMB
      */
     public ProfessorMB() {
         pesquisar();
     }
-    
-    
-    public void carregar(Professor pf){
+
+    public void carregar(Professor pf) {
         setProf(pf);
     }
-    
-    public void cadastrar(){
-        try{
-            
+
+    public void cadastrar() {
+        
+        if (dao.pesquisarPorLogin(pesquisa) != true) {
+            try {
+
                 dao.create(prof);
                 FacesUtil.adicionarMensagem("formulario", "O professor foi cadastrado");
                 prof = new Professor();
-            
-        } catch (EntityExistsException e) {
-            FacesUtil.adicionarMensagem("formulario", "Este aluno já está cadastrado");
-        } catch (RollbackException e) {
-            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
-                    + "no cadastro");
+
+            } catch (EntityExistsException e) {
+                FacesUtil.adicionarMensagem("formulario", "Este aluno já está cadastrado");
+            } catch (RollbackException e) {
+                FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                        + "no cadastro");
+            }
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", "Testing");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            pesquisar();
+        } else {
+            FacesUtil.adicionarMensagem("formulario", "Erro:  O login já existe no sistema!");
         }
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome","Testing");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        pesquisar();
+
     }
-    
+
     /*
-    public void alterar(Long id){
+     public void alterar(Long id){
         
-        try {
-            FacesUtil.adicionarMensagem("formulario", "Chegou em alterar!!!");
-            if(id != 0)
-            {
-                 dao.edit(dao.findProfessor(id));
-                 FacesUtil.adicionarMensagem(getProf().getNome() + "formulario", "O professor foi alterado");
-            }
-            else {
-                FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
-                        + "selecionado. Clique em um professor para alterá-lo.");
-            }
+     try {
+     FacesUtil.adicionarMensagem("formulario", "Chegou em alterar!!!");
+     if(id != 0)
+     {
+     dao.edit(dao.findProfessor(id));
+     FacesUtil.adicionarMensagem(getProf().getNome() + "formulario", "O professor foi alterado");
+     }
+     else {
+     FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
+     + "selecionado. Clique em um professor para alterá-lo.");
+     }
             
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
-                    + "cadastrado ou já havia sido excluído");
-        } catch (Exception ex) {
-            Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
-                    + "na alteração");
-        }
+     } catch (NonexistentEntityException ex) {
+     Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+     FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
+     + "cadastrado ou já havia sido excluído");
+     } catch (Exception ex) {
+     Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
+     FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+     + "na alteração");
+     }
         
         
-        FacesContext context = FacesContext.getCurrentInstance();
-        //context.addMessage(null, new FacesMessage("Erro no banco de dados"));
-        context.addMessage("formulario:nomeDoFunc", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Alterado"));  
+     FacesContext context = FacesContext.getCurrentInstance();
+     //context.addMessage(null, new FacesMessage("Erro no banco de dados"));
+     context.addMessage("formulario:nomeDoFunc", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Alterado"));  
         
-        pesquisar();
-    }  
-    * //
-    * 
-    * 
-    * 
+     pesquisar();
+     }  
+     * //
+     * 
+     * 
+     * 
     
     
-    /**
+     /**
      * Limpa o formulário de cadastro de alunos.
      * Apenas atribui um novo Aluno para este bean.
      */
-    
-    public void alterar(){
+    public void alterar() {
         try {
-            if(prof.getId() != null){
-                    dao.edit(prof);
-                    prof = new Professor();
-                    FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
-           } else {
+            if (prof.getId() != null) {
+                dao.edit(prof);
+                prof = new Professor();
+                FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
+            } else {
                 FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
                         + "selecionado. Clique em um professor para alterá-lo.");
             }
-            
+
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
             FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
@@ -127,16 +132,13 @@ public class ProfessorMB {
         }
         pesquisar();
     }
-    
-    
-    
-    
-    public void cancelar(){
+
+    public void cancelar() {
         setProf(new Professor());
     }
-    
-    public void excluir(Long id){
-        
+
+    public void excluir(Long id) {
+
         try {
             dao.destroy(id);
             FacesUtil.adicionarMensagem("formulario", "O professor foi excluído");
@@ -147,32 +149,33 @@ public class ProfessorMB {
         }
         pesquisar();
     }
-    
-    
-    
-    
+
     /**
      * Pesquisa os alunos por nome de acordo com o atributo pesquisa. Não
      * retorna nada. Para acessar os resultados, utilize o atributo alunos deste
      * bean.
      */
-    public void pesquisar(){
+    public void pesquisar() {
         profs = dao.findProfessorEntities();
     }
-    
-    public void pesquisarPorNome(){
+
+    public void pesquisarPorNome() {
         profs = dao.pesquisarPorNome(pesquisa);
     }
-    
+
+    public boolean pesquisarPorLogin() {
+        return dao.pesquisarPorLogin(pesquisa);
+    }
+
     /**
      * Limpa a pesquisa e pega todos os alunos. Não retorna nada. Para acessar
      * os resultados, utilize o atributo alunos deste bean.
      */
-    public void getTodos(){
+    public void getTodos() {
         pesquisa = "";
         getProfs();
     }
-    
+
     /**
      * @return the pesquisa
      */
@@ -186,7 +189,6 @@ public class ProfessorMB {
     public void setPesquisa(String pesquisa) {
         this.pesquisa = pesquisa;
     }
-    
 
     /**
      * @return the prof
@@ -215,5 +217,4 @@ public class ProfessorMB {
     public void setProfs(List<Professor> profs) {
         this.profs = profs;
     }
-
 }

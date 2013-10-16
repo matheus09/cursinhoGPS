@@ -5,6 +5,8 @@
 package modelo;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +22,12 @@ public class Professor extends Pessoa implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String funcao;
     private String salario;
     private String habilidade;
     private String formacao;
+    private String login;
+    private String senha;
+    
 
     public Long getId() {
         return id;
@@ -36,16 +40,7 @@ public class Professor extends Pessoa implements Serializable {
     /**
      * @return the funcao
      */
-    public String getFuncao() {
-        return funcao;
-    }
-
-    /**
-     * @param funcao the funcao to set
-     */
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
-    }
+    
 
     /**
      * @return the salario
@@ -113,6 +108,34 @@ public class Professor extends Pessoa implements Serializable {
     
     public String toString() {
         return "modelo.Professor[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the senha
+     */
+    public String getSenha() {
+        return senha;
+    }
+
+    /**
+     * @param senha the senha to set
+     */
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
 }

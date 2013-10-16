@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -144,6 +145,22 @@ public class ProfessorJpaController implements Serializable {
         q.setParameter("nome", "%" + nome + "%");
         
         return q.getResultList();
+    }
+    
+       
+    public boolean pesquisarPorLogin(String login){
+        EntityManager em = getEntityManager();
+        TypedQuery<Professor> query;
+        query = em.createQuery("select p from Professor p where p.login=:login",Professor.class);
+        query.setParameter("login", login);
+
+        try{
+            //encontrou
+            return true;
+        }catch(NoResultException e){
+            //nao encontrou
+            return false;
+        }
     }
     
     
