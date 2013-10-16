@@ -46,7 +46,7 @@ public class ProfessorMB {
 
     public void cadastrar() {
         
-        if (dao.pesquisarPorLogin(pesquisa) != true) {
+        if (dao.pesquisarPorLogin(pesquisa) == true) {
             try {
 
                 dao.create(prof);
