@@ -27,6 +27,8 @@ public class Pessoa implements Serializable {
     private String email;
     @Column(nullable = false)
     private String endereco;
+    @Column(nullable = false)
+    private String cpf;
     
     /**
      * Testa se a Pessoa é maior de idade.
@@ -118,6 +120,20 @@ public class Pessoa implements Serializable {
         this.endereco = endereco;
     }
     
+    /**
+    * @return the cpf
+    */
+    public String getCpf() {
+        return cpf;
+    }
+
+    /**
+     * @param cpf the cpf to set
+     */
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -129,30 +145,5 @@ public class Pessoa implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pessoa)) {
-            return false;
-        }
-        Pessoa other = (Pessoa) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Pessoa[ id=" + id + " ]";
     }
 }

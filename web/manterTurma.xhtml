@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cursinho</title>
+    </h:head>
+    <h:body>                
+        
+        <h:form id="formTabelaTurma">
+            <p:dataTable id="tabelaTurma" var="s" value="#{salaMB.salas}" paginator="true" rows="5"  
+                         paginatorTemplate="{CurrentPageReport}  
+                         {FirstPageLink} 
+                         {PreviousPageLink} 
+                         {PageLinks} 
+                         {NextPageLink} 
+                         {LastPageLink} 
+                         {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="5,10,15,20,25">
+                <f:facet name="header">  
+                    <h:outputText value="Todas as Turmas" /> 
+                </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Código da Turma" />
+                    </f:facet>
+                    <p:commandLink ajax="false" value="#{turma.id}" action="#{turmaMB.carregar(turma)}"/>
+                </p:column>
+
+                <p:column>  
+                    <f:facet name="header">
+                        <h:outputText value="Excluir Turma" />   
+                    </f:facet>
+                    <p:commandButton ajax="false" action="#{turmaMB.excluirTurma(turma.id)}" image="ui-icon-trash"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <hr></hr>
+
+        <!--Formulario de crud-->
+
+        <h:form id="formTurma">
+            <p:panel id="formPanelTurma" header="Manutenção de Turmas">
+                
+                <h:inputHidden value="#{turmaMB.turma.id}"/>
+                <h:panelGrid columns="3">
+                    
+                    <h:outputLabel value="Nome da Turma:*"/>
+                    <p:inputText id="campoNomeTurma" 
+                                 maxlength="50" 
+                                 value="#{turmaMB.turma.nome}" 
+                                 required="true" 
+                                 requiredMessage="Campo Obrigatório">
+                    </p:inputText><p:message for="campoNomeTurma"/>
+                    
+                    <h:outputLabel value="Dias:*" />  
+                    <p:selectManyCheckbox id="campoDiasTurma" 
+                                          value="#{turmaMB.turma.dias}"
+                                          layout="lineDirection"
+                                          required="true"
+                                          requiredMessage="Campo Obrigatório">
+                            <f:selectItem itemLabel="Segunda" itemValue="Segunda"/>
+                            <f:selectItem itemLabel="Terça"   itemValue="Terça"/>
+                            <f:selectItem itemLabel="Quarta"  itemValue="Quarta"/>
+                            <f:selectItem itemLabel="Quinta"  itemValue="Quinta"/>
+                            <f:selectItem itemLabel="Sexta"   itemValue="Sexta"/>
+                            <f:selectItem itemLabel="Sábado"  itemValue="Sábado"/>
+                            <f:selectItem itemLabel="Domingo" itemValue="Domingo"/>
+                    </p:selectManyCheckbox><p:message for="campoDiasTurma"/>
+                    
+                    <h:outputLabel value="Data Inicial:*"/>
+                    <p:calendar id="campoDataInicialTurma" 
+                                value="#{turmaMB.turma.periodoInicio}"
+                                locale="pt_BR"
+                                pattern="MM/dd/yyyy"
+                                navigator="true"
+                                required="true" 
+                                requiredMessage="Campo obrigatório">
+                    </p:calendar><p:message for="campoDataInicialTurma"/>
+                    
+                    <h:outputLabel value="Data Final:*"/>
+                    <p:calendar id="campoDataFinalTurma" 
+                                value="#{turmaMB.turma.periodoFim}" 
+                                locale="pt_BR"
+                                pattern="MM/dd/yyyy"
+                                navigator="true"
+                                required="true" 
+                                requiredMessage="Campo Obrigatório">
+                    </p:calendar><p:message for="campoDataFinalTurma"/>
+                    
+                    <h:outputLabel value="Turno:*"/>
+                    <p:selectOneRadio id="campoTurnoTurma" 
+                                      value="#{turmaMB.turma.turno}"
+                                      required="true"
+                                      requiredMessage="Campo Obrigatório">
+                        <f:selectItem itemLabel="Matutino"   itemValue="Matutino"/>  
+                        <f:selectItem itemLabel="Vespertino" itemValue="Vespertino"/>  
+                        <f:selectItem itemLabel="Noturno"    itemValue="Noturno" />  
+                    </p:selectOneRadio><p:message for="campoTurnoTurma"/>
+                    
+                    <h:outputLabel value="Início às:*"/>
+                    <p:calendar id="campoHoraInicioTurma"
+                                value="#{turmaMB.turma.horaInicio}" 
+                                pattern="HH:mm" 
+                                timeOnly="true"
+                                required="true"
+                                requiredMessage="Campo Obrigatório">
+                    </p:calendar><p:message for="campoHoraInicioTurma"/>
+                    
+                    <h:outputLabel value="Termino às:*"/>
+                    <p:calendar id="campoHoraFimTurma"
+                                value="#{turmaMB.turma.horaFim}" 
+                                pattern="HH:mm" 
+                                timeOnly="true"
+                                required="true"
+                                requiredMessage="Campo Obrigatório">
+                    </p:calendar><p:message for="campoHoraFimTurma"/>
+                    
+                    <!--<h:outputLabel value="Capacidade:*"/>
+                    <p:inputText id="capacidade" 
+                                 value="#{salaMB.sala.capacidade}" 
+                                 validatorMessage="Campo Só Permite Números" 
+                                 required="true" 
+                                 requiredMessage="Campo Obrigatório">
+                        <f:validateRegex for="capacidade" pattern="\d*[0-9](d*[0-9])?"/>
+                    </p:inputText><p:message for="capacidade"/> -->
+                
+                </h:panelGrid>
+                
+                <p:commandButton value="Cadastrar" action="#{turmaMB.inserirTurma()}" image="ui-icon-disk"/>
+                <p:commandButton value="Alterar" action="#{tumrMB.alterarTurma()}" image="ui-icon-pencil"/>
+                <p:commandButton value="Cancelar" action="#{turmaMB.novaTurma()}" image="ui-icon-cancel"/>
+                
+            </p:panel>
+        </h:form>
+        
+        <hr></hr>
+
+         <!--Formulario de pesquisa-->
+
+        <!-- <h:form id="formPesquisa">
+            <p:panel id="formPanelPesquisa" header="Pesquisar Salas Por Nome">
+                <h:panelGrid columns="3">
+                    <h:outputLabel value="Nome da Sala:*"/>
+                    <p:inputText id="nomeDaSala" style="text-transform: lowercase" maxlength="30" value ="#{salaMB.nomeDaSala}" required="true" requiredMessage="Campo Obrigatório"/><p:message for="nomeDaSala"/>
+                </h:panelGrid>
+                <p:commandButton value="Pesquisar" action="#{salaMB.pesquisarPorNomeDeSala()}" image="ui-icon-search"/>
+            </p:panel>
+        </h:form>
+        <hr></hr>
+
+        <h:form id="formPesquisaTodos">
+            <p:panel id="formPanelPesquisa" header="Pesquisar Todas Salas">
+                <p:commandButton value="Pesquisar Todos" action="#{salaMB.pesquisar()}" image="ui-icon-search"/>
+            </p:panel>
+        </h:form> -->
+        
+    </h:body>
+</html>
+
+
