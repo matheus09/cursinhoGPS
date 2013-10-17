@@ -1,14 +1,46 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title> Bem-vindo ao Cursinho GPS </title>
+        <style type="text/css">
+                body {
+                    margin:0;
+                    padding: 0;
+                    background-color: #CEE3E6;
+                }
+        </style>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+            <p:dock position="top">
+                <p:menuitem value="Cadastrar Funcionário" icon="/img/dock/funcionario.png" url="index.xhtml"/>  
+                <p:menuitem value="Cadastrar Professor" icon="/img/dock/professor.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Aluno" icon="/img/dock/aluno.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Sala" icon="/img/dock/sala.png" url="sala.xhtml"/>
+                <p:menuitem value="Cadastrar Curso" icon="/img/dock/curso.png" url="index.xhtml"/>
+                <p:menuitem value="Efetuar Matrícula" icon="/img/dock/matricula.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Turma" icon="/img/dock/turma.png" url="index.xhtml"/>
+                <p:menuitem value="Gerar Relatório" icon="/img/dock/relatorio.png" url="index.xhtml"/>
+                <p:menuitem value="Sair" icon="/img/dock/sair2.png" url="login.xhtml"/>
+            </p:dock>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <img style="display: block; margin-left: auto; margin-right: auto " src="img/estudantes.png" />
+         
+            <p:dock>
+                <p:menuitem value="Cadastrar Funcionário" icon="/img/dock/funcionario.png" url="index.xhtml"/>  
+                <p:menuitem value="Cadastrar Professor" icon="/img/dock/professor.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Aluno" icon="/img/dock/aluno.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Sala" icon="/img/dock/sala.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Curso" icon="/img/dock/curso.png" url="index.xhtml"/>
+                <p:menuitem value="Efetuar Matrícula" icon="/img/dock/matricula.png" url="index.xhtml"/>
+                <p:menuitem value="Cadastrar Turma" icon="/img/dock/turma.png" url="index.xhtml"/>
+                <p:menuitem value="Gerar Relatório" icon="/img/dock/relatorio.png" url="index.xhtml"/>
+                <p:menuitem value="Sair" icon="/img/dock/sair2.png" url="index.xhtml"/>
+            </p:dock>
     </h:body>
 </html>
-

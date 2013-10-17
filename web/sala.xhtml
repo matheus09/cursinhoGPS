@@ -100,5 +100,9 @@
                         <p:commandButton value="Pesquisar Todos" action="#{salaMB.pesquisar()}" image="ui-icon-search" update=":formPesquisa, :tabela, :formulario"/>
                     </p:panel>
                 </h:form>
+                <p:dock position="bottom">
+                    <p:menuitem value="Página Principal" icon="/img/dock/home.png" url="index.xhtml"/>
+                    <p:menuitem value="Sair" icon="/img/dock/sair2.png" url="login.xhtml"/>
+                </p:dock>
     </h:body>
 </html>

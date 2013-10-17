@@ -6,9 +6,16 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title> Bem-vindo ao Cursinho GPS </title>
+        <style type="text/css">
+                body {
+                    margin:0;
+                    padding: 0;
+                    background-color: #CEE3E6;
+                }
+        </style>
     </h:head>
     <h:body>
-        <img style="display: block; margin-left: auto; margin-right: auto " src="img/imagem.jpg" />
+        <img style="display: block; margin-left: auto; margin-right: auto " src="img/estudantes.png" />
         <h:form id="form">  
             <p:growl id="growl" showDetail="true" life="3000" />  
 
@@ -24,7 +31,7 @@
                             id="password" required="true" label="password" />  
 
                     <f:facet name="footer">  
-                        <p:commandButton id="loginButton" value="Login" update="form"   
+                        <p:commandButton id="loginButton" value="Login" update="form" image="ui-icon-check" 
                             actionListener="#{loginBean.login}"
                             action="#{loginBean.logado()}"/>  
                     </f:facet>  

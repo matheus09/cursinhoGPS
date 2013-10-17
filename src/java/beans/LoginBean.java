@@ -69,7 +69,7 @@ public class LoginBean {
     {
         if(loggedIn)
         {
-            return "sala.xhtml";
+            return "index.xhtml";
         }
         username = null;
         password = null;
