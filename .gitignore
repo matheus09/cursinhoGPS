@@ -5,6 +5,7 @@
 *.war
 *.ear
 *.zip
+build.xml
 /lib/
 /nbproject/
 /build/
