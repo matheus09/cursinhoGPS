@@ -69,8 +69,6 @@
                 <h:inputHidden value="#{professorMB.prof.id}"/>
                 <h:panelGrid columns="3">
                     
-                   
-                    
                     <h:outputText value="Nome:"/>
                     <p:inputText id="campoNome" value="#{professorMB.prof.nome}" 
                                  required="true" requiredMessage="Campo obrigatório"/>
@@ -104,7 +102,13 @@
 
                     <h:outputText value="E-mail:"/>
                     <p:inputText id="campoEmail" value="#{professorMB.prof.email}"
-                                 required="true" requiredMessage="Campo obrigatório"/>
+                                 required="true" requiredMessage="Campo obrigatório" validatorMessage="O e-mail deve ser nome@nome.com"> <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/></p:inputText>
+                    
+                    
+                    
+                    
+                    
+                    
                     <p:message for="campoEmail"/>
 
                     <h:outputText value="Rua:"/>

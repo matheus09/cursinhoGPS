@@ -168,7 +168,7 @@ public class ProfessorMB {
             }else{
             
             //FacesUtil.mensErro("Login", "Login ja existe no sistema!");
-            FacesUtil.adicionarMensagem("formulario", "Erro:"+" Login já existe no sistema");
+            FacesUtil.adicionarMensagem("campoLogin", "Erro:"+" Login já existe no sistema");
             }
 
         } catch (EntityExistsException e) {
