@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package beans;
 
 import dao.ProfessorJpaController;
@@ -32,6 +28,7 @@ public class ProfessorMB {
     private ProfessorJpaController dao = new ProfessorJpaController(EMF.getEntityManagerFactory());
     private List<Professor> profs;
     private String pesquisa;
+    private Integer v = 0;
 
     /**
      * Creates a new instance of ProfessorMB
@@ -43,67 +40,6 @@ public class ProfessorMB {
     public void carregar(Professor pf) {
         setProf(pf);
     }
-
-    public void cadastrar() {
-        
-        if (dao.pesquisarPorLogin(pesquisa) == true) {
-            try {
-
-                dao.create(prof);
-                FacesUtil.adicionarMensagem("formulario", "O professor foi cadastrado");
-                prof = new Professor();
-
-            } catch (EntityExistsException e) {
-                FacesUtil.adicionarMensagem("formulario", "Este aluno já está cadastrado");
-            } catch (RollbackException e) {
-                FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
-                        + "no cadastro");
-            }
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", "Testing");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            pesquisar();
-        } else {
-            FacesUtil.adicionarMensagem("formulario", "Erro:  O login já existe no sistema!");
-        }
-
-    }
-
-    /*
-     public void alterar(Long id){
-        
-     try {
-     FacesUtil.adicionarMensagem("formulario", "Chegou em alterar!!!");
-     if(id != 0)
-     {
-     dao.edit(dao.findProfessor(id));
-     FacesUtil.adicionarMensagem(getProf().getNome() + "formulario", "O professor foi alterado");
-     }
-     else {
-     FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
-     + "selecionado. Clique em um professor para alterá-lo.");
-     }
-            
-     } catch (NonexistentEntityException ex) {
-     Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-     FacesUtil.adicionarMensagem("formulario", "Erro: O professor não foi "
-     + "cadastrado ou já havia sido excluído");
-     } catch (Exception ex) {
-     Logger.getLogger(ProfessorMB.class.getName()).log(Level.SEVERE, null, ex);
-     FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
-     + "na alteração");
-     }
-        
-        
-     FacesContext context = FacesContext.getCurrentInstance();
-     //context.addMessage(null, new FacesMessage("Erro no banco de dados"));
-     context.addMessage("formulario:nomeDoFunc", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Alterado"));  
-        
-     pesquisar();
-     }  
-     * //
-     * 
-     * 
-     * 
     
     
      /**
@@ -117,8 +53,7 @@ public class ProfessorMB {
                 prof = new Professor();
                 FacesUtil.adicionarMensagem("formulario", "O professor foi alterado");
             } else {
-                FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi "
-                        + "selecionado. Clique em um professor para alterá-lo.");
+                FacesUtil.adicionarMensagem("formulario", "Nenhum professor foi " + "selecionado. Clique em um professor para alterá-lo.");
             }
 
         } catch (NonexistentEntityException ex) {
@@ -163,7 +98,7 @@ public class ProfessorMB {
         profs = dao.pesquisarPorNome(pesquisa);
     }
 
-    public boolean pesquisarPorLogin() {
+    public boolean pesquisarPorLogin(String l) {
         return dao.pesquisarPorLogin(pesquisa);
     }
 
@@ -216,5 +151,46 @@ public class ProfessorMB {
      */
     public void setProfs(List<Professor> profs) {
         this.profs = profs;
+    }
+
+    public void cadastrar() {
+        try {
+            for (Professor pr : dao.findProfessorEntities()) {
+                if ((pr.getLogin().toLowerCase().contains(prof.getLogin()))) {
+
+                    v += 1;
+                } 
+            }
+            if (v == 0) {
+                dao.create(prof);
+                FacesUtil.adicionarMensagem("formulario", "O professor foi cadastrado");
+                prof = new Professor();
+            }else{
+            
+            //FacesUtil.mensErro("Login", "Login ja existe no sistema!");
+            FacesUtil.adicionarMensagem("formulario", "Erro:"+" Login já existe no sistema");
+            }
+
+        } catch (EntityExistsException e) {
+            FacesUtil.adicionarMensagem("formulario", "Este aluno já está cadastrado");
+        } catch (RollbackException e) {
+            FacesUtil.adicionarMensagem("formulario", "Erro: Algo deu errado "
+                    + "no cadastro");
+        }
+        pesquisar();
+    }
+
+    /**
+     * @return the v
+     */
+    public Integer getV() {
+        return v;
+    }
+
+    /**
+     * @param v the v to set
+     */
+    public void setV(Integer v) {
+        this.v = v;
     }
 }

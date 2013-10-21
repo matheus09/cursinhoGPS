@@ -19,7 +19,7 @@ import modelo.Professor;
 
 /**
  *
- * @author Helismara
+ * @author Monnalisa Christina
  */
 public class ProfessorJpaController implements Serializable {
 
@@ -51,7 +51,7 @@ public class ProfessorJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Professor merge = em.merge(professor);
+            professor = em.merge(professor);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -135,34 +135,31 @@ public class ProfessorJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public List<Professor> pesquisarPorNome(String nome) {
         EntityManager em = getEntityManager();
 
         TypedQuery<Professor> q;
         q = em.createQuery("select p from Professor p where p.nome like :nome",
-             Professor.class);
+                Professor.class);
         q.setParameter("nome", "%" + nome + "%");
-        
+
         return q.getResultList();
     }
-    
-       
-    public boolean pesquisarPorLogin(String login){
-        EntityManager em = getEntityManager();
-        TypedQuery<Professor> query;
-        query = em.createQuery("select p from Professor p where p.login=:login",Professor.class);
-        query.setParameter("login", login);
 
-        try{
-            //encontrou
+    public boolean pesquisarPorLogin(String login) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Professor> query;
+            query = em.createQuery("select p from Professor p where p.login=:login", Professor.class);
+            query.setParameter("login", login);
+       
+           // query.getSingleResult();
             return true;
-        }catch(NoResultException e){
+            
+        } catch (NoResultException e) {
             //nao encontrou
             return false;
         }
     }
-    
-    
-    
 }

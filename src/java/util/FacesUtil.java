@@ -1,6 +1,3 @@
-
-
-
 package util;
 
 import javax.faces.application.FacesMessage;
@@ -31,4 +28,7 @@ public class FacesUtil {
     public static void adicionarMensagem(String mensagem){
         adicionarMensagem(null, mensagem);
     }
+    
+     
+     
 }
