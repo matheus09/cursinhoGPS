@@ -4,12 +4,15 @@
  */
 package beans;
 
+import dao.PessoaJpaController;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import modelo.Pessoa;
 import org.primefaces.context.RequestContext;
+import util.EMF;
 
 /**
  *
@@ -22,38 +25,24 @@ public class LoginBean {
     /**
      * Creates a new instance of LoginBean
      */
-    private String username;  
-      
-    private String password;
-     
+    PessoaJpaController daoPessoa = new PessoaJpaController(EMF.getEntityManagerFactory());
+    
+    private Pessoa pessoa;
     boolean loggedIn = false; 
     
     public LoginBean() {
+        pessoa = new Pessoa();
     }
-    
-    public String getUsername() {  
-        return username;  
-    }  
   
-    public void setUsername(String username) {  
-        this.username = username;  
-    }  
-  
-    public String getPassword() {  
-        return password;  
-    }  
-  
-    public void setPassword(String password) {  
-        this.password = password;  
-    }  
-  
-    public void login(ActionEvent actionEvent) {  
+    public void login(ActionEvent actionEvent) {
+        
+        pessoa = daoPessoa.findUsuario(this.pessoa);
+        
         RequestContext context = RequestContext.getCurrentInstance();  
         FacesMessage msg = null;  
           
-        if(username != null  && username.equals("admin") && password != null  && password.equals("admin")) {  
+        if(pessoa != null) {  
             loggedIn = true;  
-            //msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-vindo", username);
             
         } else {  
             loggedIn = false;  
@@ -71,8 +60,21 @@ public class LoginBean {
         {
             return "index.xhtml";
         }
-        username = null;
-        password = null;
+        pessoa = new Pessoa();
         return "login.xhtml";
+    }
+
+    /**
+     * @return the pessoa
+     */
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    /**
+     * @param pessoa the pessoa to set
+     */
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 }
