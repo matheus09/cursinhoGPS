@@ -25,6 +25,8 @@ public class Funcionario extends Pessoa implements Serializable {
     }
     private String funcao;
     private Double salario;
+    private String login;
+    private String senha;
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,6 +92,34 @@ public class Funcionario extends Pessoa implements Serializable {
      */
     public void setSalario(Double salario) {
         this.salario = salario;
+    }
+
+    /**
+     * @return the login
+     */
+    public String getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the senha
+     */
+    public String getSenha() {
+        return senha;
+    }
+
+    /**
+     * @param senha the senha to set
+     */
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
 }

@@ -1,11 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,31 +12,54 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 
 /**
- *
  * @author ciro
  */
 @MappedSuperclass
 public class Pessoa implements Serializable {
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String telefone;
+    @Column(nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
+    @Column(nullable = false)
     private String email;
-    private String endereco;
-    private int idade;
+    @Column(nullable = false)
+    private String rua;
+    @Column(nullable = false)
+    private String numero;
+    @Column(nullable = false)
+    private String complemento;
+    @Column(nullable = false)
+    private String bairro;
+    @Column(nullable = false)
+    private String pontoDeReferencia;
+    @Column(nullable = false)
+    private String cep;
+    @Column(nullable = false)
+    private String cidade;
+    @Column(nullable = false)
+    private String estado;
     
     /**
-     * Diz se a pessoa tem mais de 18 anos.
-     * @return valor booleano indicando true, se for maior de idade e false,
-     * caso contrário.
+     * Testa se a Pessoa é maior de idade.
+     * @return (está retornando false, por enquanto) indica true se for maior de idade ou false, caso contrário.
      */
     public boolean maioridade(){
-        if (getIdade() < 18){
+        Calendar nasc = Calendar.getInstance();
+        nasc.setTime(dataNascimento);
+        Calendar agora = Calendar.getInstance();
+        agora.setTime(new Date());
+        agora.roll(Calendar.YEAR, -18);
+        
+        if (agora.after(nasc)) {
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
-    
+ 
     /**
      * @return the nome
      */
@@ -74,9 +96,11 @@ public class Pessoa implements Serializable {
     }
 
     /**
-     * @param dataNascimento the dataNascimento to set
+     * @param dataNascimento a data de nascimento da pessoa.
      */
     public void setDataNascimento(Date dataNascimento) {
+        SimpleDateFormat df = new SimpleDateFormat("DD/MM/yyyy");
+        df.format(dataNascimento);
         this.dataNascimento = dataNascimento;
     }
 
@@ -92,20 +116,6 @@ public class Pessoa implements Serializable {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    /**
-     * @return the endereco
-     */
-    public String getEndereco() {
-        return endereco;
-    }
-
-    /**
-     * @param endereco the endereco to set
-     */
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
     
     private static final long serialVersionUID = 1L;
@@ -147,17 +157,114 @@ public class Pessoa implements Serializable {
     }
 
     /**
-     * @return the idade
+     * @return the rua
      */
-    public int getIdade() {
-        return idade;
+    public String getRua() {
+        return rua;
     }
 
     /**
-     * @param idade the idade to set
+     * @param rua the rua to set
      */
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
-    
+
+    /**
+     * @return the numero
+     */
+    public String getNumero() {
+        return numero;
+    }
+
+    /**
+     * @param numero the numero to set
+     */
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    /**
+     * @return the complemento
+     */
+    public String getComplemento() {
+        return complemento;
+    }
+
+    /**
+     * @param complemento the complemento to set
+     */
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    /**
+     * @return the bairro
+     */
+    public String getBairro() {
+        return bairro;
+    }
+
+    /**
+     * @param bairro the bairro to set
+     */
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    /**
+     * @return the pontoDeReferencia
+     */
+    public String getPontoDeReferencia() {
+        return pontoDeReferencia;
+    }
+
+    /**
+     * @param pontoDeReferencia the pontoDeReferencia to set
+     */
+    public void setPontoDeReferencia(String pontoDeReferencia) {
+        this.pontoDeReferencia = pontoDeReferencia;
+    }
+
+    /**
+     * @return the cep
+     */
+    public String getCep() {
+        return cep;
+    }
+
+    /**
+     * @param cep the cep to set
+     */
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    /**
+     * @return the cidade
+     */
+    public String getCidade() {
+        return cidade;
+    }
+
+    /**
+     * @param cidade the cidade to set
+     */
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }

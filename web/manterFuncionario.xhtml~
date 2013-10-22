@@ -48,16 +48,6 @@
 
             <p:column>
                 <f:facet name="header">  
-                    <h:outputText value="Nascimento"/> 
-                </f:facet>
-                <h:form>
-                    <p:commandLink ajax="false" value="#{func.dataNascimento}"
-                                   action="#{funcionarioMB.carregar(func)}"/>
-                </h:form>
-            </p:column> 
-
-            <p:column>
-                <f:facet name="header">  
                     <h:outputText value="E-mail"/> 
                 </f:facet>
                 <h:form>
@@ -65,17 +55,7 @@
                                    action="#{funcionarioMB.carregar(func)}"/>
                 </h:form>
             </p:column>
-            
-            <p:column>
-                <f:facet name="header">  
-                    <h:outputText value="Endereço"/> 
-                </f:facet>
-                <h:form>
-                    <p:commandLink ajax="false" value="#{func.endereco}"
-                                   action="#{funcionarioMB.carregar(func)}"/>
-                </h:form>
-            </p:column>
-            
+                       
             <p:column>
                 <f:facet name="header">  
                     <h:outputText value="Função"/> 
@@ -88,17 +68,7 @@
 
             <p:column>
                 <f:facet name="header">  
-                    <h:outputText value="Salario"/> 
-                </f:facet>
-                <h:form>
-                <p:commandLink ajax="false" value="#{func.salario}" 
-                                     action="#{funcionarioMB.carregar(func)}"/>
-                </h:form>
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">  
-                    <h:outputText value="Função"/> 
+                    <h:outputText value="Excluir"/> 
                 </f:facet>
                 <h:form>
                     <p:commandButton ajax="false" value="X" 
@@ -112,7 +82,7 @@
         <!--Formulario de crud-->
         
         <p:panel header="Manutenção de Alunos">
-            <h:form id="formCadAlunos">
+            <h:form id="formCadFunc">
                 <h:inputHidden value="#{funcionarioMB.func.id}"/>
                 <h:panelGrid columns="3">
                     <h:outputText value="Nome:"/>
@@ -131,12 +101,47 @@
                                  required="true" requiredMessage="Campo obrigatório"
                                  validatorMessage="Digite um telefone no formato (XX) XXXX-XXXX"/>
                     <p:message for="campoTelefone"/>
-
-                    <h:outputText value="Digite seu endereço:"/>
-                    <p:inputText id="campoEndereco" value="#{funcionarioMB.func.endereco}"
+                   
+                    <h:outputText value="Estado:"/>
+                    <p:inputText id="campoEnderecoEstado" value="#{funcionarioMB.func.estado}"
                                  required="true" requiredMessage="Campo obrigatório"/>
-                    <p:message for="campoEndereco"/>
+                    <p:message for="campoEnderecoEstado"/>
+
+                    <h:outputText value="CEP:"/>
+                    <p:inputText id="campoEnderecoCep" value="#{funcionarioMB.func.cep}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoCep"/>
+
+                    <h:outputText value="Cidade:"/>
+                    <p:inputText id="campoEnderecoCidade" value="#{funcionarioMB.func.cidade}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoCidade"/>
+
+                    <h:outputText value="Bairro:"/>
+                    <p:inputText id="campoEnderecoBairro" value="#{funcionarioMB.func.bairro}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoBairro"/>
+
+                    <h:outputText value="Rua:"/>
+                    <p:inputText id="campoEnderecoRua" value="#{funcionarioMB.func.rua}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoRua"/>
                     
+                    <h:outputText value="Número:"/>
+                    <p:inputText id="campoEnderecoNumero" value="#{funcionarioMB.func.numero}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoNumero"/>
+                    
+                    <h:outputText value="Ponto de Referência:"/>
+                    <p:inputText id="campoEnderecoPtDeReferencia" value="#{funcionarioMB.func.pontoDeReferencia}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoPtDeReferencia"/>
+
+                    <h:outputText value="Complemento:"/>
+                    <p:inputText id="campoEnderecoComplemento" value="#{funcionarioMB.func.complemento}"
+                                 required="true" requiredMessage="Campo obrigatório"/>
+                    <p:message for="campoEnderecoComplemento"/>
+
                     <h:outputText value="Data de nascimento:"/>
                     <p:calendar id="campoData" value="#{funcionarioMB.func.dataNascimento}"
                                 required="true" requiredMessage="Campo obrigatório"
@@ -149,21 +154,21 @@
                     <p:message for="campoFuncao"/>
 
                     <h:outputText value="Salario:"/>
-                    <p:inputText id="campoEmail" value="#{funcionarioMB.func.salario}"
+                    <p:inputText id="campoSalario" value="#{funcionarioMB.func.salario}"
                                  required="true" requiredMessage="Campo obrigatório"/>
                     <p:message for="campoSalario"/>
 
                 </h:panelGrid>
                 
-                <p:commandButton value="Cadastrar" action="#{funcionarioMB.cadastrar()}" ajax="false"/>
+                <p:commandButton value="Cadastrar" action="#{funcionarioMB.inserir()}" ajax="false"/>
                 <p:commandButton value="Alterar" action="#{funcionarioMB.alterar()}" ajax="false"/>
             </h:form>
             
             <h:form>
                 <p:commandButton value="Limpar" action="#{funcionarioMB.limpar()}" ajax="false"/>
             </h:form>
+            <p:messages for="formCadFunc"/>
             
-            <p:messages for="formCadAlunos"/>
         </p:panel>
         
         <!--Formularios de pesquisa-->
@@ -172,9 +177,9 @@
             <h:form id="formPesqFunc">
                 <h:panelGrid columns="3">
                     <h:outputLabel value="Nome do Funcionario:"/>
-                    <p:inputText id="campoPesqNome" value="#{funcionarioMB.pesquisa}"
+                    <p:inputText id="campoPesqNome" value="#{funcionarioMB.nomePesq}"
                                  required="true" requiredMessage="Campo obrigatório"/>
-                    <p:message for="formPesqAlunos"/>
+                    <p:message for="formPesqFunc"/>
                 </h:panelGrid>
                 <p:commandButton value="Pesquisar" ajax="false"
                                  action="#{funcionarioMB.pesquisarPorNome()}"/>
@@ -185,7 +190,7 @@
         <p:panel header="Pesquisar Todos os Alunos">
             <h:form id="formPesquisaTodos">
                 <p:commandButton value="Pesquisar todos" ajax="false"
-                                 action="#{funcionarioMB.getTodos()}"/>
+                                 action="#{funcionarioMB.listarFuncionarios()}"/>
             </h:form>
         </p:panel>
     </body>

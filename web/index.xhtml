@@ -7,37 +7,16 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        
-        <!--h:link outcome="welcomePrimefaces" value="Primefaces welcome page" /-->
-        <h:form id="form">
-        <br />
-        <h:commandLink value="Manter Funcionários" action="/manterFuncionario.xhtml" />
-        <br />
-        <h:outputLabel value="Nome:"/>
-        <p:inputText value="#{funcionarioMB.func.nome}"/>
-        <br/>
-        <h:outputLabel value="Telefone:"/>
-        <p:inputText value="#{funcionarioMB.func.telefone}"/>
-        <br/>
-        <h:outputLabel value="Data de Nascimento:"/>
-        <p:calendar value="#{funcionarioMB.func.dataNascimento}"/>
-        <br/>
-        <h:outputLabel value="Email:"/>
-        <p:inputText value="#{funcionarioMB.func.email}"/>
-        <br/>
-        <h:outputLabel value="Endereço:"/>
-        <p:inputText value="#{funcionarioMB.func.endereco}"/>
-        <br/>
-        <h:outputLabel value="Função:"/>
-        <p:inputText value="#{funcionarioMB.func.funcao}"/>
-        <br/>
-        <h:outputLabel value="Salario:"/>
-        <p:inputText value="#{funcionarioMB.func.salario}"/>
-        
-        <br/>
-        <p:commandButton value="Inserir" actionListener="#{funcionarioMB.inserir()}"
-                             update="form"/>
+        <h:form>
+            <h:commandLink value="Cadastrar alunos" action="/cadastroAluno.xhtml"/>
+            <br/>
+            <h:commandLink value="Cadastrar curso" action="/cadastrarCurso.xhtml"/>
+            <br/>
+            <h:commandLink value="Cadastrar professor" action="/cadastroProfessor.xhtml"/>
+            <br/>
+            <h:commandLink value="Cadastrar Funcionario" action="/manterFuncionario.xhtml"/>
+            <br/>
+            <h:commandLink value="Cadastrar sala" action="/sala.xhtml"/>
         </h:form>
     </h:body>
 </html>

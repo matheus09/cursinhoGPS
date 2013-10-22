@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.persistence.EntityManagerFactory;
 import modelo.Funcionario;
 import util.EMF;
 import util.FacesUtil;
@@ -25,7 +24,7 @@ import util.FacesUtil;
 @RequestScoped
 public class FuncionarioMB {
 
-    private FuncionarioJpaController dao = new FuncionarioJpaController(EMF.getFactory());
+    private FuncionarioJpaController dao = new FuncionarioJpaController(EMF.getEntityManagerFactory());
     private Funcionario func;
     private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
     private String nomePesq;
